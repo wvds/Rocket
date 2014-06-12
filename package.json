@@ -3,9 +3,9 @@
   "author": "Nicky Lenaers",
   "description": "Design in the browser with Rocket!",
   "version": "0.0.1",
-  "repository" : {
+  "repository": {
     "type": "git",
-	"url": "https://github.com/NickyL/Rocket"
+    "url": "https://github.com/NickyL/Rocket"
   },
   "dependencies": {
     "express": "4.3.2",
@@ -15,5 +15,7 @@
     "gulp": "^3.6.2",
     "gulp-jshint": "^1.6.1",
     "gulp-compass": "^1.1.9",
+    "connect-livereload": "^0.4.0",
+    "tiny-lr": "0.0.7"
   }
 }
