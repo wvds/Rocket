@@ -28,7 +28,7 @@ gulp.task('default', ['watch']);*/
 var gulp = require('gulp');
  
 var EXPRESS_PORT = 4000;
-var EXPRESS_ROOT = __dirname;
+var EXPRESS_ROOT = 'comp/sass';
 var LIVERELOAD_PORT = 35729;
 
 // Let's make things more readable by
@@ -75,5 +75,5 @@ gulp.task('default', function () {
  
   startExpress();
   startLivereload();
-  gulp.watch('*.html', notifyLivereload);
+  gulp.watch('*.scss', notifyLivereload);
 });
