@@ -1,0 +1,11 @@
+# Exclude any PSD/AI source
+*.psd
+*.ai
+ 
+# Exclude Node.js modules
+node_modules/*
+ 
+# Exclude Text Files
+*.txt
+# Except read me
+!README.txt

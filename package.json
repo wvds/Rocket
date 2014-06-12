@@ -1,0 +1,14 @@
+{
+  "name": "Rocket",
+  "author": "Nicky Lenaers",
+  "description": "Design in the browser with Rocket",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "4.3.2",
+    "ejs": "^1.0.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.6.2",
+    "gulp-jshint": "^1.6.1"
+  }
+}
