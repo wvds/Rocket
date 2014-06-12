@@ -1,7 +1,6 @@
-var gulp = require('gulp');
-
-var jshint = require('gulp-jshint');
-var compass = require('gulp-compass');
+var	gulp = require('gulp'),	
+	jshint = require('gulp-jshint'),
+	compass = require('gulp-compass'),
 
 gulp.task('lint', function() {
 	return gulp.src('comp/js/*.js')
