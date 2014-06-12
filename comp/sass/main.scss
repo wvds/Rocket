@@ -1,0 +1,6 @@
+@import 'compass';
+
+a {
+	color: yellow;
+	@include single-box-shadow;
+}

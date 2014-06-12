@@ -4,6 +4,9 @@
  
 # Exclude Node.js modules
 node_modules/*
+
+# Exclude Sass cache
+.sass-cache/*
  
 # Exclude Text Files
 *.txt
