@@ -1,4 +1,4 @@
 Rocket
 ======
 
-A web application using the Design In Browser philosophy!
+Design in the browser with Rocket!
