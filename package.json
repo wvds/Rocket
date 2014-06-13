@@ -3,6 +3,7 @@
   "author": "Nicky Lenaers",
   "description": "Design in the browser with Rocket!",
   "version": "0.0.1",
+  "main": "rocket.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/NickyL/Rocket"
