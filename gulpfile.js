@@ -27,8 +27,8 @@ gulp.task('default', ['watch']);*/
 
 var gulp = require('gulp');
  
-var EXPRESS_PORT = 4000;
-var EXPRESS_ROOT = 'comp/sass';
+var EXPRESS_PORT = 3000;
+var EXPRESS_ROOT = __dirname;
 var LIVERELOAD_PORT = 35729;
 
 // Let's make things more readable by
@@ -60,11 +60,11 @@ function notifyLivereload(event) {
   // `gulp.watch()` events provide an absolute path
   // so we need to make it relative to the server root
   var fileName = require('path').relative(EXPRESS_ROOT, event.path);
- 
+ 	console.log("Filename: " + fileName);
   lr.changed({
-    body: {
-      files: [fileName]
-    }
+	body: {
+	  files: [fileName]
+	}
   });
 }
 
@@ -75,5 +75,5 @@ gulp.task('default', function () {
  
   startExpress();
   startLivereload();
-  gulp.watch('*.scss', notifyLivereload);
+  gulp.watch('views/*.ejs', notifyLivereload);
 });
