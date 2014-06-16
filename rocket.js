@@ -1,8 +1,9 @@
 module.exports = function() {
 	
 	// Requirements
-	var express = require('express');
-	var rocket = express();
+	var express = require('express'),
+		routes = require('./routes/index'),
+		rocket = express();
 	
 	// Middleware
 	rocket.use(require('connect-livereload')());
@@ -18,6 +19,15 @@ module.exports = function() {
 			body: '<h1>Welcome to Rocket!</h1>'
 		});
 	});
+	
+	rocket.get('/project', function(req, res) {
+		res.render('project.ejs', {
+			title: 'Rocket Projects',
+			body: '<h1>Pick a Project!</h1>'
+		});
+	});
+	
+	rocket.get('/project/:id', routes.project);
 	
 	return rocket;
 };
