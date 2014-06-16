@@ -1,6 +1,14 @@
+@import 'compass/reset';
 @import 'compass';
 
+@import "variables";
+@import "mixins";
+@import "base";
+@import "layout";
+@import "modules";
+
 h1 {
-	color: purple;
+	font-size: 3em;
+	color: $color1;
 	@include single-box-shadow;
 }
