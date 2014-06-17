@@ -27,7 +27,7 @@ Under construction...
 Rocket uses a local MongoDB database. The database is used via the mongoose model.
 Binary executables are required to run the database locally.
 
-Oficial installation guides:
+Official installation guides:
 *	[Windows](http://docs.mongodb.org/manual/tutorial/install-mongodb-on-windows/)
 *	[OS X](http://docs.mongodb.org/manual/tutorial/install-mongodb-on-os-x/)
 *	Linux
