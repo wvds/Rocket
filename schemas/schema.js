@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 
 module.exports = mongoose.model('Rocket', {
-	admin: String
+	firstname: String,
+	lastname: String
 });

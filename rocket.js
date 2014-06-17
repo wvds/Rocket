@@ -17,9 +17,11 @@ module.exports = function(projects) {
 	
 	projects.on('error', console.error.bind(console, 'connection error'));
 	projects.once('open', function callback() {
-		console.log("Connected with MongoDB!");
-		
-		var testschema = require('./schemas/schema');
+
+		projects.db.collectionNames(function (err, names) {
+			console.log(names); // [{ name: 'dbname.myCollection' }]
+			//module.exports.Collection = names;
+		});
 		
 	});
 	
@@ -39,9 +41,26 @@ module.exports = function(projects) {
 	});*/
 	
 	rocket.get('/project', function(req, res) {
+		
 		var RocketSchema = require('./schemas/schema');
+		var query = RocketSchema.find({name: 'Nicky'});
+		
+		query.exec(function(err, projects) {
+				if(err) {
+					console.log(err);
+					res.status(500).json({status: 'failure'});
+				} else {
+					console.log(projects);
+					res.render('project.ejs', {
+						projects: projects
+					});
+				}
+		});
+		
+		
+		/*var RocketSchema = require('./schemas/schema');
 		RocketSchema.find()
-			//.setOptions({ sort: 'admin' })
+			.setOptions({ sort: 'name' })
 			.exec(function(err, projects) {
 				if(err) {
 					console.log(err);
@@ -53,6 +72,7 @@ module.exports = function(projects) {
 					});
 				}
 			});
+			*/
 	});
 	
 	//rocket.put('/project/:name', routes.stamp);*/

@@ -13,5 +13,8 @@ node_modules/*
 # Except read me
 !README.txt
 
-# Exclude executables (e.g. Mongo)
+# Exclude executables
 *.exe
+
+# Exclude lock files from MongoDB
+*.lock
