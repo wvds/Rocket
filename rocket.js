@@ -2,12 +2,24 @@ module.exports = function(connection) {
 	
 	// Requirements
 	var express = require('express'),
-		routes = require('./routes/route')(), //require('./routes/route')(connection)
+		//mongo_store = require('connect-mongo')(express),
+		cookieParser = require('cookie-parser'),
+		session = require('express-session'),
+		routes = require('./routes/route')(),
+		//passport = require('./auth'),
 		rocket = express();
 	
 	// Middleware
 	rocket.use(require('connect-livereload')());
-	rocket.use(express.static(__dirname));	
+	rocket.use(express.static(__dirname));
+	
+	/*rocket.use(cookieParser());
+	rocket.use(session({
+		secret: 'keyboard cat'
+	}));*/
+	
+	/*rocket.use(passport.initialize());
+	rocket.use(passport.session());*/
 		
 		/*var project = new Project({
 			name: "HANDO",
@@ -31,7 +43,13 @@ module.exports = function(connection) {
 	});
 	
 	rocket.get('/project', routes.rd_project);
+	
+	/*rocket.get('/login', routes.rd_login);
+	rocket.post('/login', passport.authenticate('local', {
+		failureRedirect: '/login',
+		successRedirect: '/user'
+	}));
+	rocket.get('/user', routes.rd_user);*/
 
 	return rocket;
-	
 };

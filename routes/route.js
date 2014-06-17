@@ -14,7 +14,24 @@ module.exports = function() { // function(connection)
 				});
 			}
 		});
-	};
+	}
+	
+	route.rd_login = function(req, res) {
+		res.render('login.ejs', {
+			title: 'Rocket Login'
+		});
+	}
+	
+	route.rd_user = function(req, res) {
+		if(req.session.passport.user === undefined) {
+			res.redirect('/login');
+		} else {
+			res.render('user', {
+				title: 'Welcome',
+				user: req.user
+			});
+		}
+	}
 	
 	return route;
 };
