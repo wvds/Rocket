@@ -1,29 +1,26 @@
-module.exports = function(projects) {
-	
-	// Convert JSON data to JavaScript array
-	/*var arr_projects = [];
-	for(var item in projects) {
-		arr_projects.push(projects[item]);
-	};*/
+module.exports = function(connection) {
 	
 	// Requirements
 	var express = require('express'),
-		routes = require('./routes/route'),
+		routes = require('./routes/route')(), //require('./routes/route')(connection)
 		rocket = express();
 	
 	// Middleware
 	rocket.use(require('connect-livereload')());
-	rocket.use(express.static(__dirname));
-	
-	projects.on('error', console.error.bind(console, 'connection error'));
-	projects.once('open', function callback() {
-
-		projects.db.collectionNames(function (err, names) {
-			console.log(names); // [{ name: 'dbname.myCollection' }]
-			//module.exports.Collection = names;
+	rocket.use(express.static(__dirname));	
+		
+		/*var project = new Project({
+			name: "HANDO",
+			date_start: Date.now(),
+			date_end: Date.now()
 		});
 		
-	});
+		console.log(project.name);
+		
+		project.save(function(err) {
+			if(err) return console.error(err);
+			console.log("saved");
+		})*/
 	
 	// Routes
 	rocket.get('/', function(req, res) {
@@ -33,49 +30,7 @@ module.exports = function(projects) {
 		});
 	});
 	
-	/*rocket.get('/project', function(req, res) {
-		res.render('project.ejs', {
-			title: 'Rocket Projects',
-			body: '<h1>Pick a Project!</h1>'
-		});
-	});*/
-	
-	rocket.get('/project', function(req, res) {
-		
-		var RocketSchema = require('./schemas/schema');
-		var query = RocketSchema.find({name: 'Nicky'});
-		
-		query.exec(function(err, projects) {
-				if(err) {
-					console.log(err);
-					res.status(500).json({status: 'failure'});
-				} else {
-					console.log(projects);
-					res.render('project.ejs', {
-						projects: projects
-					});
-				}
-		});
-		
-		
-		/*var RocketSchema = require('./schemas/schema');
-		RocketSchema.find()
-			.setOptions({ sort: 'name' })
-			.exec(function(err, projects) {
-				if(err) {
-					console.log(err);
-					res.status(500).json({status: 'failure'});
-				} else {
-					console.log(projects);
-					res.render('project.ejs', {
-						projects: projects
-					});
-				}
-			});
-			*/
-	});
-	
-	//rocket.put('/project/:name', routes.stamp);*/
+	rocket.get('/project', routes.rd_project);
 
 	return rocket;
 	

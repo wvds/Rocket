@@ -5,7 +5,9 @@
 	<title>Projects</title>
 </head>
 <body>
-	HOi
-	<%= projects %>
+	Hoi
+	<% projects.forEach(function(el) { %>
+		<h2><%= el.name %></h2>
+	<% }); %>
 </body>
 </html>
