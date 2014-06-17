@@ -1,5 +1,5 @@
 // Requirements
-var	express_app = require('./rocket.js')(),
+var	server = require('./server'),
 	gulp = require('gulp'),
 	jshint = require('gulp-jshint'),
 	uglify = require('gulp-uglify'),

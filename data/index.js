@@ -7,4 +7,4 @@ module.exports = {
 		"name": "Testproject nummer 2",
 		"date": "2012-04-23"
 	}
-};
+}

@@ -12,3 +12,6 @@ node_modules/*
 *.txt
 # Except read me
 !README.txt
+
+# Exclude executables (e.g. Mongo)
+*.exe
