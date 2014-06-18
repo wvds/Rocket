@@ -1,26 +1,35 @@
 var passport = require('passport'),
-	LocalStrategy = require('passport-local').Strategy; // Extracting the 'Strategy' property from this module.
+	LocalStrategy = require('passport-local').Strategy,
+    User = require('./schemas/user');
 
 passport.use(new LocalStrategy(
+    
 	function(username, password, done) {
-		console.log("getting password");
-		// TODO: Call database to check user
-		if(username === 'admin' && password === 'lynda') {
-			console.log("Access granted");
-			return done(null, {username: 'admin'});
-		}
-		console.log("Access denied");
-		return done(null, false);
-	}
+		
+        User.findOne({'username': username}, function(err, user) {
+            
+            if(err) return done(err);
+            if(!user) return done(null, false);
+            if(user.password != password) {
+                return done(null, false);
+            }
+            
+            /*if(username === 'admin' && password === 'lynda') {
+                console.log("Access granted");
+                return done(null, {username: 'admin'});
+            }*/
+            return done(null, user);
+        });
+	} 
 ));
 
 // These functions must be defined in order to store the user information in the session.
 passport.serializeUser(function(user, done) {
-	done(null, user.username);
+	done(null, user);
 });
 
-passport.deserializeUser(function(username, done) {
-	done(null, {username: username});
+passport.deserializeUser(function(obj, done) {
+	done(null, obj);
 });
 
 module.exports = passport;
