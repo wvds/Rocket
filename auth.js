@@ -3,8 +3,9 @@ var passport = require('passport'),
 
 passport.use(new LocalStrategy(
 	function(username, password, done) {
+		console.log("getting password");
 		// TODO: Call database to check user
-		if(username === 'admin' && password === 'password') {
+		if(username === 'admin' && password === 'lynda') {
 			console.log("Access granted");
 			return done(null, {username: 'admin'});
 		}

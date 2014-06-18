@@ -2,24 +2,26 @@ module.exports = function(connection) {
 	
 	// Requirements
 	var express = require('express'),
-		//mongo_store = require('connect-mongo')(express),
-		cookieParser = require('cookie-parser'),
+		bodyParser = require('body-parser'),
 		session = require('express-session'),
+		mongo_store = require('connect-mongo')(session),
+		cookieParser = require('cookie-parser'),
 		routes = require('./routes/route')(),
-		//passport = require('./auth'),
+		passport = require('./auth'),
+		morgan = require('morgan'),
 		rocket = express();
 	
 	// Middleware
+	rocket.use(morgan());
 	rocket.use(require('connect-livereload')());
 	rocket.use(express.static(__dirname));
 	
-	/*rocket.use(cookieParser());
-	rocket.use(session({
-		secret: 'keyboard cat'
-	}));*/
+	rocket.use(cookieParser());
+	rocket.use(bodyParser());
+	rocket.use(session({ secret: 'keyboard cat' }));
 	
-	/*rocket.use(passport.initialize());
-	rocket.use(passport.session());*/
+	rocket.use(passport.initialize());
+	rocket.use(passport.session());
 		
 		/*var project = new Project({
 			name: "HANDO",
@@ -44,12 +46,12 @@ module.exports = function(connection) {
 	
 	rocket.get('/project', routes.rd_project);
 	
-	/*rocket.get('/login', routes.rd_login);
+	rocket.get('/login', routes.rd_login);
 	rocket.post('/login', passport.authenticate('local', {
-		failureRedirect: '/login',
+		failureRedirect: '/',
 		successRedirect: '/user'
 	}));
-	rocket.get('/user', routes.rd_user);*/
+	rocket.get('/user', routes.rd_user);
 
 	return rocket;
 };

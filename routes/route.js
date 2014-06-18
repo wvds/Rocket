@@ -26,7 +26,7 @@ module.exports = function() { // function(connection)
 		if(req.session.passport.user === undefined) {
 			res.redirect('/login');
 		} else {
-			res.render('user', {
+			res.render('user.ejs', {
 				title: 'Welcome',
 				user: req.user
 			});
