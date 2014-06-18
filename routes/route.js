@@ -39,7 +39,7 @@ module.exports = function() { // function(connection)
     });
 	
 	route.rd_user = function(req, res) {
-        //console.log(passport.user);
+        //console.log(req.session.passport.user);
 		if(req.session.passport.user === undefined) {
 			res.redirect('/login');
             return;
