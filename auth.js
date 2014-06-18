@@ -13,11 +13,6 @@ passport.use(new LocalStrategy(
             if(user.password != password) {
                 return done(null, false);
             }
-            
-            /*if(username === 'admin' && password === 'lynda') {
-                console.log("Access granted");
-                return done(null, {username: 'admin'});
-            }*/
             return done(null, user);
         });
 	} 

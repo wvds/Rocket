@@ -7,22 +7,27 @@ module.exports = function() { // function(connection)
 	
 	route.rd_project = function(req, res) {
         
+        var user = req.session.passport.user;
+        
         // Verify user
-        if(req.session.passport.user === undefined) {
-            res.redirect('/');
+        if(user === undefined) {
+            res.redirect('/login');
             return;
         }
         
-        console.log(req.session.passport.user.first_name);
-        
-        Project
-            .find({})
-            .select('name date_start')
+        // List all projects assigned to the user
+        ProjectUser
+            .find('project_id')
+            .where('user_id').equals(user._id)
+            .populate('project_id')
             .exec(function(err, results) {
                 
             if(err) {
 				res.status(500).json({status: 'failure'});
 			} else {
+                
+                console.log("Results: " + results);
+                
 				res.render('project', {
 					projects: results
 				});
