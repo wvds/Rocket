@@ -25,7 +25,8 @@
     "connect-livereload": "^0.4.0",
     "gulp-livereload": "^2.1.0",
     "tiny-lr": "0.0.7",
-    "gulp-uglify": "^0.3.0"
+    "gulp-uglify": "^0.3.0",
+    "gulp-nodemon": "^1.0.4"
   },
   "engines": {
     "node": "^0.10.26",

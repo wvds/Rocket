@@ -3,6 +3,7 @@ var	server = require('./server'),
 	gulp = require('gulp'),
 	jshint = require('gulp-jshint'),
 	uglify = require('gulp-uglify'),
+    nodemon = require('gulp-nodemon'),
 	compass = require('gulp-compass'),
 	livereload = require('gulp-livereload');
 
@@ -29,12 +30,23 @@ gulp.task('compass', function() {
 
 gulp.task('watch', function() {
 	livereload.listen();
+    gulp.start('node');
 	gulp.watch('comp/js/*.js', ['js']);
 	gulp.watch('comp/sass/*.scss', ['compass']);
 });
 
 gulp.task('build', function() {
 	// Building tasks here...
+});
+
+gulp.task('node', function() {
+    nodemon({
+        script: 'rocket.js',
+        ext: 'js rb',
+        ignore: ['./public/**']
+    }).on('restart', function() {
+        console.log("Restarting server...");
+    })
 });
 
 // Gulp Default

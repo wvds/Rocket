@@ -21,14 +21,8 @@ module.exports = function(connection) {
         secret: 'rocketio',
         mongoose_connection: connection
     }));
-	
 	rocket.use(passport.initialize());
 	rocket.use(passport.session());
-		
-		/*project.save(function(err) {
-			if(err) return console.error(err);
-			console.log("saved");
-		})*/
 	
 	// Routes | GET
 	rocket.get('/', function(req, res) {
@@ -44,5 +38,6 @@ module.exports = function(connection) {
     // Routes | POST
 	rocket.post('/login', routes.rd_authenticate);
 
+    // Return application
 	return rocket;
 };

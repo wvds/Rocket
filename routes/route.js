@@ -1,16 +1,19 @@
 module.exports = function() { // function(connection)
 
 	var passport = require('../auth'),
-        Project = require('../schemas/project');
+        Project = require('../schemas/project'),
+        ProjectUser = require('../schemas/project_user');
 	var route = {};
 	
 	route.rd_project = function(req, res) {
         
+        // Verify user
         if(req.session.passport.user === undefined) {
-            console.log("Access denied");
             res.redirect('/');
             return;
         }
+        
+        console.log(req.session.passport.user.first_name);
         
         Project
             .find({})
@@ -35,7 +38,7 @@ module.exports = function() { // function(connection)
     
     route.rd_authenticate = passport.authenticate('local', {
         failureRedirect: '/',
-        successRedirect: '/user'
+        successRedirect: '/project'
     });
 	
 	route.rd_user = function(req, res) {
