@@ -20,4 +20,4 @@ node_modules/*
 *.lock
 
 # Exclude journals from MongoDB
-database/journal/*
+database/journal/
