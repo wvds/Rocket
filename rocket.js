@@ -12,7 +12,6 @@ module.exports = function(connection) {
 	
 	// Middleware
     rocket.set('view engine', 'ejs');
-    
 	rocket.use(require('connect-livereload')());
 	rocket.use(express.static(__dirname));
 	rocket.use(cookieParser());
@@ -32,6 +31,7 @@ module.exports = function(connection) {
 		});
 	});
 	rocket.get('/project', routes.rd_project);
+    rocket.get('/project/:code', routes.rd_editor);
 	rocket.get('/login', routes.rd_login);
     rocket.get('/user', routes.rd_user);
     

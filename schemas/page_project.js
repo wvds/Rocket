@@ -1,9 +1,9 @@
 var mongoose = require('mongoose'),
-    User = require('./user'),
+    Page = require('./page'),
     Project = require('./project'),
     ObjectId = mongoose.Schema.ObjectId;
 
-module.exports = mongoose.model('ProjectUser', {
-	user_id: {type: ObjectId, ref: 'User'},
+module.exports = mongoose.model('PageProject', {
+	page_id: {type: ObjectId, ref: 'Page'},
 	project_id: {type: ObjectId, ref: 'Project'}
-}, 'project_user');
+}, 'page_project');

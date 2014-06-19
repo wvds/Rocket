@@ -3,13 +3,18 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Projects</title>
+    
+    <!-- CSS -->
+	<link rel="stylesheet" href="../public/css/main.css">
+	
+	<!-- JavaScript -->
+	<script src="../public/js/main.js"></script>
+    
 </head>
 <body>
 	Mijn Projecten
 	<% projects.forEach(function(el) { %>
-		<h2>
             <a href="/project/<%= el.project_id.code %>"><%= el.project_id.name %></a>
-        </h2>
 	<% }); %>
 </body>
 </html>

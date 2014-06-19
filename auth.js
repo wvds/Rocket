@@ -13,6 +13,7 @@ passport.use(new LocalStrategy(
             if(user.password != password) {
                 return done(null, false);
             }
+
             return done(null, user);
         });
 	} 
@@ -20,11 +21,13 @@ passport.use(new LocalStrategy(
 
 // These functions must be defined in order to store the user information in the session.
 passport.serializeUser(function(user, done) {
-	done(null, user);
+	done(null, user._id);
 });
 
-passport.deserializeUser(function(obj, done) {
-	done(null, obj);
+passport.deserializeUser(function(id, done) {
+    User.findById(id, function(err, user) {
+        done(err, user);
+    });
 });
 
 module.exports = passport;

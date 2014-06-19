@@ -3,8 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Rocket Editor</title>
+    
+    <!-- CSS -->
+	<link rel="stylesheet" href="../public/css/main.css">
+	
+	<!-- JavaScript -->
+	<script src="../public/js/main.js"></script>
+    
 </head>
 <body>
-    <h1>Editor</h1>
+    <h1>Editor for <%= code %></h1>
+    <% pages.forEach(function(el) { %>
+        <%= el.page_id.name %></a>
+	<% }); %>
 </body>
 </html>

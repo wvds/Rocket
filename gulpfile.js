@@ -30,7 +30,7 @@ gulp.task('compass', function() {
 
 gulp.task('watch', function() {
 	livereload.listen();
-    gulp.start('node');
+    //gulp.start('node');
 	gulp.watch('comp/js/*.js', ['js']);
 	gulp.watch('comp/sass/*.scss', ['compass']);
 });
@@ -42,7 +42,7 @@ gulp.task('build', function() {
 gulp.task('node', function() {
     nodemon({
         script: 'rocket.js',
-        ext: 'js rb ./views/ejs',
+        ext: 'js rb ejs',
         ignore: ['./public/**']
     }).on('restart', function() {
         console.log("Restarting server...");
