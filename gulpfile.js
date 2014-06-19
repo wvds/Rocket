@@ -42,7 +42,7 @@ gulp.task('build', function() {
 gulp.task('node', function() {
     nodemon({
         script: 'rocket.js',
-        ext: 'js rb ejs',
+        ext: 'js rb ./views/ejs',
         ignore: ['./public/**']
     }).on('restart', function() {
         console.log("Restarting server...");

@@ -7,7 +7,9 @@
 <body>
 	Mijn Projecten
 	<% projects.forEach(function(el) { %>
-		<h2><%= el.project_id.name %></h2>
+		<h2>
+            <a href="/project/<%= el.project_id.code %>"><%= el.project_id.name %></a>
+        </h2>
 	<% }); %>
 </body>
 </html>

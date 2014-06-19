@@ -1,8 +1,7 @@
 module.exports = function() { // function(connection)
 
 	var passport = require('../auth'),
-        Project = require('../schemas/project'),
-        ProjectUser = require('../schemas/project_user');
+        scm_projectuser = require('../schemas/project_user');
 	var route = {};
 	
 	route.rd_project = function(req, res) {
@@ -10,13 +9,10 @@ module.exports = function() { // function(connection)
         var user = req.session.passport.user;
         
         // Verify user
-        if(user === undefined) {
-            res.redirect('/login');
-            return;
-        }
+        if(user === undefined) { return res.redirect('/login'); }
         
         // List all projects assigned to the user
-        ProjectUser
+        scm_projectuser
             .find('project_id')
             .where('user_id').equals(user._id)
             .populate('project_id')
@@ -25,9 +21,6 @@ module.exports = function() { // function(connection)
             if(err) {
 				res.status(500).json({status: 'failure'});
 			} else {
-                
-                console.log("Results: " + results);
-                
 				res.render('project', {
 					projects: results
 				});
@@ -42,7 +35,7 @@ module.exports = function() { // function(connection)
 	}
     
     route.rd_authenticate = passport.authenticate('local', {
-        failureRedirect: '/',
+        failureRedirect: '/login',
         successRedirect: '/project'
     });
 	
