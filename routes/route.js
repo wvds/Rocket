@@ -4,7 +4,8 @@ module.exports = function() { // function(connection)
         scm_project_user = require('../schemas/project_user'),
         scm_project = require('../schemas/project'),
         scm_page_project = require('../schemas/page_project'),
-        scm_pages = require('../schemas/page');
+        scm_pages = require('../schemas/page'),
+        scm_group = require('../schemas/group');
 	var route = {};
 	
 	route.rd_project = function(req, res) {
@@ -56,24 +57,47 @@ module.exports = function() { // function(connection)
         if(req.user === undefined) { return res.redirect('/login'); }
         
         // Get project code
-        var project_code = req.param('code');
+        var project_code = req.param('code'),
+            editor = this;
         
         // Look for the right project based on code
         scm_project
             .findOne({ code: project_code })
-            .exec(function(err, results) {
+            .exec(function(err, project) {
+                editor.project = project;
                 
                 // Use project reference to look for pages
                 scm_page_project
                     .find()
                     .populate('page_id')
-                    .where('project_id').equals(results._id)
+                    .where('project_id').equals(project._id)
                     .exec(function(err, pages) {
-                        // Render page
-                        res.render('editor', {
-                            code: project_code,
-                            pages: pages
-                        });
+                        editor.pages = pages;
+                        
+                        // TODO: DEZE CODE UIT DEZE LANGE SLIERT HALEN
+                        // GEBRUIK THIS ALS REFERENCE VOOR DE QUERIES
+                        
+                        // TEMP
+                        /*for(var i = 0; i < pages.length; i++) {
+                            console.log(pages[i].page_id);
+                        }*/
+                        
+                        // List all groups within a project
+                        scm_group
+                            .find()
+                            .where('project_id').equals(project._id)
+                            .exec(function(err, groups) {
+                                
+                                editor.groups = groups;
+                                
+                                // Render page
+                                res.render('editor', {
+                                    name: editor.project.name,
+                                    code: project_code,
+                                    pages: editor.pages,
+                                    groups: editor.groups
+                                });
+                            });
                     });
             });
     }

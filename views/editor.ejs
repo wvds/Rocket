@@ -13,8 +13,11 @@
 </head>
 <body>
     <h1>Editor for <%= code %></h1>
+    <h2>Pages for <%= name %></h2>
+    <ul>
     <% pages.forEach(function(el) { %>
-        <%= el.page_id.name %></a>
+        <li><%= el.page_id.name %></li>
 	<% }); %>
+    </ul>
 </body>
 </html>
