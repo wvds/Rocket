@@ -8,10 +8,13 @@ module.exports = function(connection) {
 		cookieParser = require('cookie-parser'),
 		routes = require('./routes/route')(),
 		passport = require('./auth'),
-		rocket = express();
+		rocket = express(),
+        $ = require('jquery');
 	
-	// Middleware
+	// Middleware | SET
     rocket.set('view engine', 'ejs');
+    
+    // Middleware | USE
 	rocket.use(require('connect-livereload')());
 	rocket.use(express.static(__dirname));
 	rocket.use(cookieParser());

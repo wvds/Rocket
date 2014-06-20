@@ -19,5 +19,25 @@
         <li><%= el.page_id.name %></li>
 	<% }); %>
     </ul>
+    
+    <form action="" method="post">
+        <label for="page"></label>
+        <input type="text" name="page">
+        <input type="submit">
+    </form>
+    
+    <h2>Groups for <%= name %></h2>
+    <ul>
+    <% groups.forEach(function(el) { %>
+        <li><%= el.name %></li>
+	<% }); %>
+    </ul>
+    
+    <h2>Elements for <%= name %></h2>
+    <ul>
+    <% elements.forEach(function(el) { %>
+        <li><%= el.name %></li>
+	<% }); %>
+    </ul>
 </body>
 </html>
