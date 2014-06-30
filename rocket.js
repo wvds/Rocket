@@ -1,5 +1,5 @@
 module.exports = function(connection) {
-	
+
 	// Requirements
 	var express = require('express'),
 		bodyParser = require('body-parser'),
@@ -10,22 +10,22 @@ module.exports = function(connection) {
 		passport = require('./auth'),
 		rocket = express(),
         $ = require('jquery');
-	
+
 	// Middleware | SET
     rocket.set('view engine', 'ejs');
-    
+
     // Middleware | USE
 	rocket.use(require('connect-livereload')());
 	rocket.use(express.static(__dirname));
 	rocket.use(cookieParser());
 	rocket.use(bodyParser());
-	rocket.use(session({ 
+	rocket.use(session({
         secret: 'rocketio',
-        mongoose_connection: connection
+				mongoose_connection: connection
     }));
 	rocket.use(passport.initialize());
 	rocket.use(passport.session());
-	
+
 	// Routes | GET
 	rocket.get('/', function(req, res) {
 		res.render('index.ejs', {
@@ -37,7 +37,7 @@ module.exports = function(connection) {
     rocket.get('/project/:code', routes.rd_editor);
 	rocket.get('/login', routes.rd_login);
     rocket.get('/user', routes.rd_user);
-    
+
     // Routes | POST
 	rocket.post('/login', routes.rd_authenticate);
 
