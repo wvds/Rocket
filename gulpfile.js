@@ -2,14 +2,20 @@
 var	//server = require('./server'),
 	gulp = require('gulp'),
 	gutil = require('gulp-util'),
+	concat = require('gulp-concat'),
 	jshint = require('gulp-jshint'),
 	uglify = require('gulp-uglify'),
-    nodemon = require('gulp-nodemon'),
 	compass = require('gulp-compass');
 	//livereload = require('gulp-livereload');
 
-gulp.task('log', function() {
-	gutil.log('Workflows are awesome');
+// Sources
+var source_js = ['components/scripts/*.js']
+
+// Concatenate JavaScript Files
+gulp.task('js', function() {
+	gulp.src(source_js)
+		.pipe(concat('main.js'))
+		.pipe(gulp.dest('builds/development/js'))
 });
 
 // Gulp Tasks

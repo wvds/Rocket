@@ -15,6 +15,9 @@ mongoose.connect('mongodb://rocket_n_lenaers:Testtest1@ds050077.mongolab.com:500
 // 4. Insert using:
 // db.<collection>.insert({<json>})
 
+// 5. Track new branch on Github:
+// git push -u origin <new-branch-name>
+
 var connection = mongoose.connection;
 
 connection.on('error', console.error.bind(console, 'MongoDB connection error'));
