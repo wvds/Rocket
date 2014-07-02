@@ -1,4 +1,4 @@
-# Exclude any PSD/AI source
+# Exclude any PSD/AI source files
 *.psd
 *.ai
  
@@ -7,17 +7,18 @@ node_modules/*
 
 # Exclude Sass cache
 .sass-cache/*
- 
+.tmp
+
 # Exclude Text Files
 *.txt
 # Except read me
 !README.txt
 
+# Exclude images in builds
+builds/**/images/*
+
 # Exclude executables
 *.exe
 
-# Exclude lock files from MongoDB
-*.lock
-
-# Exclude journals from MongoDB
-database/journal/
+# Exclude OSx generated files
+.DS_Store

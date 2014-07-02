@@ -1,14 +1,19 @@
 // Requirements
-var	server = require('./server'),
+var	//server = require('./server'),
 	gulp = require('gulp'),
+	gutil = require('gulp-util'),
 	jshint = require('gulp-jshint'),
 	uglify = require('gulp-uglify'),
     nodemon = require('gulp-nodemon'),
-	compass = require('gulp-compass'),
-	livereload = require('gulp-livereload');
+	compass = require('gulp-compass');
+	//livereload = require('gulp-livereload');
+
+gulp.task('log', function() {
+	gutil.log('Workflows are awesome');
+});
 
 // Gulp Tasks
-gulp.task('js', function() {
+/*gulp.task('js', function() {
 	return gulp.src('comp/js/*.js')
 		.pipe(jshint())
 		.pipe(jshint.reporter('default'))
@@ -47,7 +52,7 @@ gulp.task('node', function() {
     }).on('restart', function() {
         console.log("Restarting server...");
     })
-});
+});*/
 
 // Gulp Default
 gulp.task('default', ['watch']);
