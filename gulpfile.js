@@ -4,6 +4,7 @@ var	server = require('./server'),
 	gutil = require('gulp-util'),
 	browserify = require('gulp-browserify'),
 	concat = require('gulp-concat'),
+	gulpif = require('gulp-if'),
 	jshint = require('gulp-jshint'),
 	uglify = require('gulp-uglify'),
 	compass = require('gulp-compass');
@@ -35,8 +36,11 @@ source_html = ['views/*.ejs'];
 // Concatenate JavaScript Files
 gulp.task('js', function() {
  	gulp.src(source_js)
+		.pipe(jshint())
+		.pipe(jshint.reporter('default'))
 		.pipe(concat('main.js'))
 		.pipe(browserify())
+		.pipe(gulpif(env === 'production', uglify()))
 		.pipe(gulp.dest(output_dir + 'js'))
 		.pipe(livereload());
 });
@@ -46,7 +50,7 @@ gulp.task('compass', function() {
 		.pipe(compass({
 				sass: 'components/sass',
 				image: output_dir + 'images',
-				styel: sass_style
+				style: sass_style
 			})
 			.on('error', gutil.log))
 		.pipe(gulp.dest(output_dir + 'css'))
