@@ -2,6 +2,7 @@
 var	//server = require('./server'),
 	gulp = require('gulp'),
 	gutil = require('gulp-util'),
+	browserify = require('gulp-browserify'),
 	concat = require('gulp-concat'),
 	jshint = require('gulp-jshint'),
 	uglify = require('gulp-uglify'),
@@ -9,13 +10,26 @@ var	//server = require('./server'),
 	//livereload = require('gulp-livereload');
 
 // Sources
-var source_js = ['components/scripts/*.js']
+var source_js = ['components/scripts/*.js'],
+	source_sass = ['components/sass/main.scss'];
 
 // Concatenate JavaScript Files
 gulp.task('js', function() {
 	gulp.src(source_js)
 		.pipe(concat('main.js'))
-		.pipe(gulp.dest('builds/development/js'))
+		.pipe(browserify())
+		.pipe(gulp.dest('./builds/development/js'))
+});
+
+gulp.task('compass', function() {
+	gulp.src(source_sass)
+		.pipe(compass({
+				sass: 'components/sass',
+				image: 'builds/development/images',
+				styel: 'expanded'
+			})
+			.on('error', gutil.log))
+		.pipe(gulp.dest('builds/development/css'))
 });
 
 // Gulp Tasks

@@ -1,7 +1,6 @@
-/* JavaScript File
-// Written by Nicky Lenaers
-*/
+// Browserify Requirements
+var $ = require('jquery');
 
-(function() {
+$(function() {
 	console.log("Hello World");
-})();
+});
