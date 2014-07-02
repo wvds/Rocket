@@ -3,6 +3,7 @@ var	//server = require('./server'),
 	gulp = require('gulp'),
 	gutil = require('gulp-util'),
 	browserify = require('gulp-browserify'),
+	connect = require('gulp-connect'),
 	concat = require('gulp-concat'),
 	jshint = require('gulp-jshint'),
 	uglify = require('gulp-uglify'),
@@ -19,6 +20,7 @@ gulp.task('js', function() {
 		.pipe(concat('main.js'))
 		.pipe(browserify())
 		.pipe(gulp.dest('./builds/development/js'))
+		.pipe(connect.reload())
 });
 
 gulp.task('compass', function() {
@@ -30,7 +32,24 @@ gulp.task('compass', function() {
 			})
 			.on('error', gutil.log))
 		.pipe(gulp.dest('builds/development/css'))
+		.pipe(connect.reload())
 });
+
+gulp.task('connect', function() {
+		connect.server({
+			root: 'builds/development/',
+			livereload: true,
+			port: 8000
+		});
+});
+
+gulp.task('watch', function() {
+		gulp.watch(source_js, ['js']);
+		gulp.watch('components/sass/*.scss', ['compass']);
+});
+
+// Gulp Default
+gulp.task('default', ['js', 'compass', 'connect', 'watch']);
 
 // Gulp Tasks
 /*gulp.task('js', function() {
@@ -73,6 +92,3 @@ gulp.task('node', function() {
         console.log("Restarting server...");
     })
 });*/
-
-// Gulp Default
-gulp.task('default', ['watch']);
