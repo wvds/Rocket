@@ -18,6 +18,9 @@ mongoose.connect('mongodb://rocket_n_lenaers:Testtest1@ds050077.mongolab.com:500
 // 5. Track new branch on Github:
 // git push -u origin <new-branch-name>
 
+// 6. Switch Node environment in Windows Powershell:
+// $env:NODE_ENV="<environment>"
+
 var connection = mongoose.connection;
 
 connection.on('error', console.error.bind(console, 'MongoDB connection error'));

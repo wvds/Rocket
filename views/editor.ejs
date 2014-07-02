@@ -5,39 +5,44 @@
     <title>Rocket Editor</title>
     
     <!-- CSS -->
-	<link rel="stylesheet" href="../public/css/main.css">
+	<link rel="stylesheet" href="../builds/development/css/main.css">
 	
 	<!-- JavaScript -->
 	<script src="../public/js/main.js"></script>
     
 </head>
 <body>
-    <h1>Editor for <%= code %></h1>
-    <h2>Pages for <%= name %></h2>
-    <ul>
-    <% pages.forEach(function(el) { %>
-        <li><%= el.name %></li>
-	<% }); %>
-    </ul>
-    
-    <form action="" method="post">
-        <label for="page"></label>
-        <input type="text" name="page">
-        <input type="submit">
-    </form>
-    
-    <h2>Groups for <%= name %></h2>
-    <ul>
-    <% groups.forEach(function(el) { %>
-        <li><%= el.name %></li>
-	<% }); %>
-    </ul>
-    
-    <h2>Elements for <%= name %></h2>
-    <ul>
-    <% elements.forEach(function(el) { %>
-        <li><%= el.name %></li>
-	<% }); %>
-    </ul>
+	<section>
+		<h1>Editor for <%= code %></h1>
+	</section>
+	<main>
+		<h2>Pages for <%= name %></h2>
+		<ul>
+		<% pages.forEach(function(el) { %>
+			<li><%= el.name %></li>
+		<% }); %>
+		</ul>
+
+		<form action="" method="post">
+			<label for="page">Add Page</label>
+			<input type="text" name="page">
+			<input type="submit">
+		</form>
+
+		<h2>Groups for <%= name %></h2>
+		<ul>
+		<% groups.forEach(function(el) { %>
+			<li><%= el.name %></li>
+		<% }); %>
+		</ul>
+
+		<h2>Elements for <%= name %></h2>
+		<ul>
+		<% elements.forEach(function(el) { %>
+			<li><%= el.name %></li>
+		<% }); %>
+		</ul>
+	</main>
+	
 </body>
 </html>

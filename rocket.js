@@ -8,8 +8,7 @@ module.exports = function(connection) {
 		cookieParser = require('cookie-parser'),
 		routes = require('./routes/route')(),
 		passport = require('./auth'),
-		rocket = express(),
-        $ = require('jquery');
+		rocket = express();
 
 	// Middleware | SET
     rocket.set('view engine', 'ejs');
@@ -21,7 +20,9 @@ module.exports = function(connection) {
 	rocket.use(bodyParser());
 	rocket.use(session({
         secret: 'rocketio',
-		mongoose_connection: connection
+		store: new mongo_store({
+			mongoose_connection: connection
+		})
     }));
 	rocket.use(passport.initialize());
 	rocket.use(passport.session());
