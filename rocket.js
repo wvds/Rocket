@@ -21,7 +21,7 @@ module.exports = function(connection) {
 	rocket.use(bodyParser());
 	rocket.use(session({
         secret: 'rocketio',
-				mongoose_connection: connection
+		mongoose_connection: connection
     }));
 	rocket.use(passport.initialize());
 	rocket.use(passport.session());

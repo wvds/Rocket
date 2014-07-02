@@ -1,26 +1,26 @@
 // Requirements
-var	//server = require('./server'),
+var	server = require('./server'),
 	gulp = require('gulp'),
 	gutil = require('gulp-util'),
 	browserify = require('gulp-browserify'),
-	connect = require('gulp-connect'),
 	concat = require('gulp-concat'),
 	jshint = require('gulp-jshint'),
 	uglify = require('gulp-uglify'),
 	compass = require('gulp-compass');
-	//livereload = require('gulp-livereload');
+	livereload = require('gulp-livereload');
 
 // Sources
 var source_js = ['components/scripts/*.js'],
-	source_sass = ['components/sass/main.scss'];
+	source_sass = ['components/sass/main.scss'],
+	source_html = ['views/*.ejs'];
 
 // Concatenate JavaScript Files
 gulp.task('js', function() {
-	gulp.src(source_js)
+ 	gulp.src(source_js)
 		.pipe(concat('main.js'))
 		.pipe(browserify())
 		.pipe(gulp.dest('./builds/development/js'))
-		.pipe(connect.reload())
+		.pipe(livereload());
 });
 
 gulp.task('compass', function() {
@@ -32,24 +32,23 @@ gulp.task('compass', function() {
 			})
 			.on('error', gutil.log))
 		.pipe(gulp.dest('builds/development/css'))
-		.pipe(connect.reload())
+		.pipe(livereload());
 });
 
-gulp.task('connect', function() {
-		connect.server({
-			root: 'builds/development/',
-			livereload: true,
-			port: 8000
-		});
+gulp.task('html', function() {
+	gulp.src(source_html)
+		.pipe(livereload())
 });
 
 gulp.task('watch', function() {
-		gulp.watch(source_js, ['js']);
-		gulp.watch('components/sass/*.scss', ['compass']);
+  	livereload.listen();
+  	gulp.watch(source_js, ['js']);
+  	gulp.watch('components/sass/*.scss', ['compass']);
+  	gulp.watch(source_html, ['html']);
 });
 
 // Gulp Default
-gulp.task('default', ['js', 'compass', 'connect', 'watch']);
+gulp.task('default', ['js', 'compass', 'watch']);
 
 // Gulp Tasks
 /*gulp.task('js', function() {
