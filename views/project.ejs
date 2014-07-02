@@ -14,7 +14,8 @@
 <body>
 	Mijn Projecten
 	<% projects.forEach(function(el) { %>
-            <a href="./project/<%= el.project_id.code %>"><%= el.project_id.name %></a>
+            <a href="./project/<%= el.project_id.code %>">
+            <%= el.project_id.name %></a>
 	<% }); %>
 </body>
 </html>

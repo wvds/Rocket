@@ -60,7 +60,7 @@ module.exports = function() {
             render_editor();
             
             // Get all pages for current project
-            query.get_project_pages(project, res, function(pages) {
+            query.get_pages(project, res, function(pages) {
                 editor.pages = pages;
                 render_editor();
             });

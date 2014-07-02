@@ -1,7 +1,7 @@
 module.exports = function() {
     
     var scm_project_user = require('../schemas/project_user'),
-        scm_page_project = require('../schemas/page_project'),
+        scm_page = require('../schemas/page'),
         scm_project = require('../schemas/project'),
         scm_element = require('../schemas/element'),
         scm_group = require('../schemas/group'),
@@ -37,11 +37,10 @@ module.exports = function() {
         });
     }
     
-    query.get_project_pages = function(project, res, callback) {
+    query.get_pages = function(project, res, callback) {
     
-        scm_page_project
+        scm_page
             .find()
-            .populate('page_id')
             .where('project_id').equals(project._id)
             .exec(function(err, pages) {
                 if(err) return query.res_err(res);
