@@ -7,33 +7,28 @@ var	server = require('./server'),
 	gulpif = require('gulp-if'),
 	jshint = require('gulp-jshint'),
 	uglify = require('gulp-uglify'),
-	compass = require('gulp-compass');
+	compass = require('gulp-compass'),
+	imagemin = require('gulp-imagemin'),
+	pngcrush = require('imagemin-pngcrush'),
 	livereload = require('gulp-livereload');
 
-var env,
-	source_js,
-	source_sass,
-	source_html,
-	output_dir,
-	sass_style;
+// Sources
+var source_js = ['components/scripts/*.js'],
+	source_sass = ['components/sass/main.scss'],
+	source_html = ['views/*.ejs'];
 
-// Environment will default to development
-env = process.env.NODE_ENV || 'development';
+// Environment
+var env = process.env.NODE_ENV || 'development';
 
 if(env === 'development') {
-  output_dir = 'builds/development/';
-  sass_style = 'expanded';
+ 	output_dir = 'builds/development/';
+ 	sass_style = 'expanded';
 } else {
-  output_dir = 'builds/production/';
-  sass_style = 'compressed';
+ 	output_dir = 'builds/production/';
+ 	sass_style = 'compressed';
 }
 
-// Sources
-source_js 	= ['components/scripts/*.js'];
-source_sass = ['components/sass/main.scss'];
-source_html = ['views/*.ejs'];
-
-// Concatenate JavaScript Files
+// Tasks
 gulp.task('js', function() {
  	gulp.src(source_js)
 		.pipe(jshint())
@@ -47,12 +42,13 @@ gulp.task('js', function() {
 
 gulp.task('compass', function() {
 	gulp.src(source_sass)
-		.pipe(compass({
+		.pipe(
+	  		compass({
 				sass: 'components/sass',
 				image: output_dir + 'images',
 				style: sass_style
-			})
-			.on('error', gutil.log))
+		  	})
+		  	.on('error', gutil.log))
 		.pipe(gulp.dest(output_dir + 'css'))
 		.pipe(livereload());
 });
@@ -62,54 +58,24 @@ gulp.task('html', function() {
 		.pipe(livereload())
 });
 
+gulp.task('images', function() {
+  gulp.src('builds/development/images/*.*')
+  	.pipe(gulpif(env === 'production', imagemin({
+		progressive: true,
+	  	svgoPlugins: [{removeViewBox: false}],
+	  	use: [pngcrush()]
+	})))
+  	.pipe(gulpif(env === 'production', gulp.dest(output_dir + 'images')))
+  	.pipe(livereload());
+});
+
 gulp.task('watch', function() {
   	livereload.listen();
+  	gulp.watch(source_html, ['html']);
   	gulp.watch(source_js, ['js']);
   	gulp.watch('components/sass/*.scss', ['compass']);
-  	gulp.watch(source_html, ['html']);
+  	gulp.watch('builds/development/images/*.*', ['images']);
 });
 
-// Gulp Default
-gulp.task('default', ['js', 'compass', 'watch']);
-
-// Gulp Tasks
-/*gulp.task('js', function() {
-	return gulp.src('comp/js/*.js')
-		.pipe(jshint())
-		.pipe(jshint.reporter('default'))
-		.pipe(uglify())
-		.pipe(gulp.dest('public/js'))
-		.pipe(livereload());
-});
-
-gulp.task('compass', function() {
-	return gulp.src('comp/sass/*.scss')
-		.pipe(compass({
-			config_file: './config.rb',
-			css: 'public/css',
-			sass: 'comp/sass'
-		}))
-		.pipe(gulp.dest('public/css'))
-		.pipe(livereload());
-});
-
-gulp.task('watch', function() {
-	livereload.listen();
-    //gulp.start('node');
-	gulp.watch('comp/js/*.js', ['js']);
-	gulp.watch('comp/sass/*.scss', ['compass']);
-});
-
-gulp.task('build', function() {
-	// Building tasks here...
-});
-
-gulp.task('node', function() {
-    nodemon({
-        script: 'rocket.js',
-        ext: 'js rb ejs',
-        ignore: ['./public/**']
-    }).on('restart', function() {
-        console.log("Restarting server...");
-    })
-});*/
+// Gulp Default Task
+gulp.task('default', ['html', 'js', 'compass', 'images', 'watch']);
