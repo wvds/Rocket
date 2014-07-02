@@ -9,17 +9,35 @@ var	server = require('./server'),
 	compass = require('gulp-compass');
 	livereload = require('gulp-livereload');
 
+var env,
+	source_js,
+	source_sass,
+	source_html,
+	output_dir,
+	sass_style;
+
+// Environment will default to development
+env = process.env.NODE_ENV || 'development';
+
+if(env === 'development') {
+  output_dir = 'builds/development/';
+  sass_style = 'expanded';
+} else {
+  output_dir = 'builds/production/';
+  sass_style = 'compressed';
+}
+
 // Sources
-var source_js = ['components/scripts/*.js'],
-	source_sass = ['components/sass/main.scss'],
-	source_html = ['views/*.ejs'];
+source_js 	= ['components/scripts/*.js'];
+source_sass = ['components/sass/main.scss'];
+source_html = ['views/*.ejs'];
 
 // Concatenate JavaScript Files
 gulp.task('js', function() {
  	gulp.src(source_js)
 		.pipe(concat('main.js'))
 		.pipe(browserify())
-		.pipe(gulp.dest('./builds/development/js'))
+		.pipe(gulp.dest(output_dir + 'js'))
 		.pipe(livereload());
 });
 
@@ -27,11 +45,11 @@ gulp.task('compass', function() {
 	gulp.src(source_sass)
 		.pipe(compass({
 				sass: 'components/sass',
-				image: 'builds/development/images',
-				styel: 'expanded'
+				image: output_dir + 'images',
+				styel: sass_style
 			})
 			.on('error', gutil.log))
-		.pipe(gulp.dest('builds/development/css'))
+		.pipe(gulp.dest(output_dir + 'css'))
 		.pipe(livereload());
 });
 
