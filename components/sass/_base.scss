@@ -2,10 +2,9 @@
 *:before, 
 *:after {
 	-webkit-box-sizing: border-box;
- 	   -moz-box-sizing: border-box; 
+	   -moz-box-sizing: border-box; 
 			box-sizing: border-box;
- }
-
+}
 html {
 	height: 100%;
 }
@@ -22,9 +21,6 @@ a {
 }
 header {
 	background-color: $col_darkgray;	
-}
-h1 {
-	color: white;
 }
 h2 {
 	font-size: 2em;
@@ -58,7 +54,7 @@ main {
 		height: $height_header;
 	}
 	
-	div:first-of-type {
+	#panels #sectionwrapper > section > div {
 		height: $height_header;
 		width: 100%;
 		background-color: $col_lightgray;

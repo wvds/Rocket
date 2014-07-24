@@ -4,14 +4,7 @@ body {
 
 header {
 	
-	@extend %flex_container;
-	position: absolute;
-	top: 0;
-	left: 0;
-	height: $height_header;
-	width: 100%;
-	
-	section#pages {
+	#pages {
 		
 		ul {
 			@extend %flex_container;
@@ -23,16 +16,49 @@ header {
 		@include align-self(flex-end);
 	}
 	
-	section#config {
-		text-align: right;
+	#config {
+		//text-align: right;
 		//align-self: center;
 		//background: #f02;
 	}
 	
+	@extend %flex_container;
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: $height_header;
+	width: 100%;	
 }
 
 main {
-
+	
+	#inspector {
+		
+		#sectionwrapper {
+			
+			section {
+				display: inline-block;
+				vertical-align: top;
+				width: 350px;
+				height: 200px;
+			}
+			
+			white-space: nowrap;
+			width: 1050px;
+			display: table;
+			height: 200px;
+		}
+		
+		nav {
+			@extend %flex_container;
+			@include justify-content(space-between);
+			@include align-items(center);
+		}
+		
+		white-space: nowrap;
+		overflow: hidden;
+	}
+	
 	@extend %flex_container;
 	position: absolute;
 	top: $height_header;
@@ -40,15 +66,6 @@ main {
 	height: -webkit-calc(100% - #{$height_header});
 	height: calc(100% - #{$height_header});
 	width: 100%;
-	
-	section#inspector {
-		
-		nav {
-			@extend %flex_container;
-			@include justify-content(space-between);
-			@include align-items(center);
-		}
-	}
 	
 }
 

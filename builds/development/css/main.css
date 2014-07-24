@@ -64,7 +64,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 }
 
 /* line 1, ../../../components/sass/_mixins.scss */
-header, header section#pages ul, main, main section#inspector nav {
+header #pages ul, header, main #inspector nav, main {
   display: -webkit-flex;
   display: flex;
   -webkit-flex-direction: row;
@@ -82,12 +82,12 @@ header, header section#pages ul, main, main section#inspector nav {
   box-sizing: border-box;
 }
 
-/* line 9, ../../../components/sass/_base.scss */
+/* line 8, ../../../components/sass/_base.scss */
 html {
   height: 100%;
 }
 
-/* line 12, ../../../components/sass/_base.scss */
+/* line 11, ../../../components/sass/_base.scss */
 body {
   font-family: "refrigerator-deluxe", sans-serif;
   font-weight: lighter;
@@ -96,28 +96,23 @@ body {
   color: white;
 }
 
-/* line 19, ../../../components/sass/_base.scss */
+/* line 18, ../../../components/sass/_base.scss */
 a {
   text-decoration: none;
   color: white;
 }
 
-/* line 23, ../../../components/sass/_base.scss */
+/* line 22, ../../../components/sass/_base.scss */
 header {
   background-color: #35393d;
 }
 
-/* line 26, ../../../components/sass/_base.scss */
-h1 {
-  color: white;
-}
-
-/* line 29, ../../../components/sass/_base.scss */
+/* line 25, ../../../components/sass/_base.scss */
 h2 {
   font-size: 2em;
 }
 
-/* line 32, ../../../components/sass/_base.scss */
+/* line 28, ../../../components/sass/_base.scss */
 h3 {
   display: inline-block;
   text-transform: uppercase;
@@ -127,29 +122,29 @@ h3 {
   -webkit-transition: color 0.2s ease;
   transition: color 0.2s ease;
 }
-/* line 39, ../../../components/sass/_base.scss */
+/* line 35, ../../../components/sass/_base.scss */
 h3:hover {
   color: #00abc8;
   color: #00abc8;
 }
 
-/* line 46, ../../../components/sass/_base.scss */
+/* line 42, ../../../components/sass/_base.scss */
 main #inspector,
 main #library {
   background: #35393d;
 }
-/* line 51, ../../../components/sass/_base.scss */
+/* line 47, ../../../components/sass/_base.scss */
 main #livepreview,
 main #mockup {
   color: black;
 }
-/* line 56, ../../../components/sass/_base.scss */
+/* line 52, ../../../components/sass/_base.scss */
 main nav {
   padding: 0 50px;
   height: 60px;
 }
-/* line 61, ../../../components/sass/_base.scss */
-main div:first-of-type {
+/* line 57, ../../../components/sass/_base.scss */
+main #panels #sectionwrapper > section > div {
   height: 60px;
   width: 100%;
   background-color: #40454a;
@@ -168,28 +163,24 @@ header {
   height: 60px;
   width: 100%;
 }
-/* line 14, ../../../components/sass/_layout.scss */
-header section#pages {
+/* line 7, ../../../components/sass/_layout.scss */
+header #pages {
   width: 60%;
   background: #849;
   -ms-flex-item-align: end;
   -webkit-align-self: flex-end;
   align-self: flex-end;
 }
-/* line 16, ../../../components/sass/_layout.scss */
-header section#pages ul {
+/* line 9, ../../../components/sass/_layout.scss */
+header #pages ul {
   -webkit-box-pack: start;
   -moz-box-pack: start;
   -ms-flex-pack: start;
   -webkit-justify-content: flex-start;
   justify-content: flex-start;
 }
-/* line 26, ../../../components/sass/_layout.scss */
-header section#config {
-  text-align: right;
-}
 
-/* line 34, ../../../components/sass/_layout.scss */
+/* line 33, ../../../components/sass/_layout.scss */
 main {
   position: absolute;
   top: 60px;
@@ -198,8 +189,27 @@ main {
   height: calc(100% - 60px);
   width: 100%;
 }
-/* line 46, ../../../components/sass/_layout.scss */
-main section#inspector nav {
+/* line 35, ../../../components/sass/_layout.scss */
+main #inspector {
+  white-space: nowrap;
+  overflow: hidden;
+}
+/* line 37, ../../../components/sass/_layout.scss */
+main #inspector #sectionwrapper {
+  white-space: nowrap;
+  width: 1050px;
+  display: table;
+  height: 200px;
+}
+/* line 39, ../../../components/sass/_layout.scss */
+main #inspector #sectionwrapper section {
+  display: inline-block;
+  vertical-align: top;
+  width: 350px;
+  height: 200px;
+}
+/* line 52, ../../../components/sass/_layout.scss */
+main #inspector nav {
   -webkit-box-pack: justify;
   -moz-box-pack: justify;
   -ms-flex-pack: justify;
@@ -212,7 +222,7 @@ main section#inspector nav {
   align-items: center;
 }
 
-/* line 56, ../../../components/sass/_layout.scss */
+/* line 73, ../../../components/sass/_layout.scss */
 #user,
 #config,
 #inspector,
@@ -225,12 +235,12 @@ main section#inspector nav {
 #library {
 	position: fixed;
 }*/
-/* line 69, ../../../components/sass/_layout.scss */
+/* line 86, ../../../components/sass/_layout.scss */
 #pages {
   width: 60%;
 }
 
-/* line 72, ../../../components/sass/_layout.scss */
+/* line 89, ../../../components/sass/_layout.scss */
 #livepreview,
 #mockup {
   width: 30%;

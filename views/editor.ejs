@@ -9,6 +9,7 @@
 	<link rel="stylesheet" href="../node_modules/jquery-ui/themes/base/jquery-ui.css">
 	
 	<!-- JavaScript -->
+	<script src="../builds/development/js/ftscroller.js"></script>
 	<script src="../builds/development/js/main.js"></script>
     
     <!-- Typekit Fonts -->
@@ -24,7 +25,7 @@
 		
 		<section id="user">
 			<h1>User</h1>
-			<h1>Project <%= code %></h1>
+			<h2><%= code %></h2>
 		</section>
 		
 		<section id="pages">
@@ -43,43 +44,60 @@
 	</header>
 	
 	<main>
-		<section id="inspector">
-			<nav>
-				<a href="#"><h3>Style</h3></a>
-				<a href="#"><h3>Element</h3></a>
-				<a href="#"><h3>Group</h3></a>
-			</nav>
-			
-			<div>
-				Icon
+		<div id="inspector">
+		<nav>
+			<a href="#">Style</a>
+			<a href="#">Element</a>
+			<a href="#">Group</a>
+		</nav>
+		<div id="panels">
+			<div id="sectionwrapper">
+				<section>
+				
+					<div>
+						Icon
+					</div>
+
+					<form action="" method="post">
+						<label for="page">Add Page</label>
+						<input type="text" name="page">
+						<input type="submit" value="Verzenden">
+					</form>
+
+				</section>
+				<section>
+					<div>
+						Icon
+					</div>
+				
+					<h2>Elements for <%= name %></h2>
+					<ul>
+					<% elements.forEach(function(el) { %>
+						<li><%= el.name %></li>
+					<% }); %>
+					</ul>
+				</section>
+				<section>
+				
+					<div>
+						Icon
+					</div>
+					
+					<h2>Groups for <%= name %></h2>
+					<ul>
+					<% groups.forEach(function(el) { %>
+						<li><%= el.name %></li>
+					<% }); %>
+					</ul>
+				</section>
 			</div>
-			
-			<form action="" method="post">
-				<label for="page">Add Page</label>
-				<input type="text" name="page">
-				<input type="submit" value="Verzenden">
-			</form>
-
-			<h2>Groups for <%= name %></h2>
-			<ul>
-			<% groups.forEach(function(el) { %>
-				<li><%= el.name %></li>
-			<% }); %>
-			</ul>
-
-			<h2>Elements for <%= name %></h2>
-			<ul>
-			<% elements.forEach(function(el) { %>
-				<li><%= el.name %></li>
-			<% }); %>
-			</ul>
-			
-		</section>
-
+		</div>
+		</div>
 		
 		
 		<section id="livepreview">
 			Live Preview
+					
 		</section>
 		
 		<section id="mockup">

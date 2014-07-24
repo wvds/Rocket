@@ -1,11 +1,22 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+'use strict';
 // Browserify Requirements
 var $ = require('jquery');
 require('jquery-ui');
+//var FTScroller = require('ftscroller');
 
 // DOM Loaded
 $(function() {
-	console.log("Hello World Rocket!");
+	
+	
+	var container = document.getElementById('panels'),
+		scroller = new FTScroller(container, {
+			scrollingY: false,
+			snapping: true,
+			paginatedSnap: true,
+			scrollbars: false,
+			bouncing: false
+		});
 	
 	/*$('#config').resizable({
 		ghost: true,
@@ -16,7 +27,7 @@ $(function() {
 	http://viralpatel.net/blogs/jquery-resizable-draggable-resize-drag-tutorial-example/
 	*/
 	
-	$('#inspector').draggable();
+	//$('#inspector').draggable();
 });
 },{"jquery":3,"jquery-ui":2}],2:[function(require,module,exports){
 var jQuery = require('jquery');
