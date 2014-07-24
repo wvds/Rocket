@@ -1,28 +1,77 @@
+body {
+	position: relative;
+}
+
 header {
-	@include display-flex();
-	flex-flow: row nowrap;
 	
-	// TODO:
-	// http://the-echoplex.net/flexyboxes/
+	@extend %flex_container;
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: $height_header;
+	width: 100%;
 	
-	section#user {
-		width: 20%;
-	}
 	section#pages {
+		
 		ul {
-			@include display-flex();
-			flex-flow: row nowrap;
-			justify-content: flex-start;
+			@extend %flex_container;
+			@include justify-content(flex-start);
 		}
 		
 		width: 60%;
 		background: #849;
-		align-self: flex-end;
+		@include align-self(flex-end);
 	}
+	
 	section#config {
-		width: 20%;
 		text-align: right;
-		align-self: center;
-		background: #f02;
+		//align-self: center;
+		//background: #f02;
 	}
+	
 }
+
+main {
+
+	@extend %flex_container;
+	position: absolute;
+	top: $height_header;
+	left: 0;
+	height: -webkit-calc(100% - #{$height_header});
+	height: calc(100% - #{$height_header});
+	width: 100%;
+	
+	section#inspector {
+		
+		nav {
+			@extend %flex_container;
+			@include justify-content(space-between);
+			@include align-items(center);
+		}
+	}
+	
+}
+
+// Widths
+#user,
+#config, 
+#inspector,
+#library { 
+	width: 20%;
+	min-width: 350px;
+}
+
+/*#inspector,
+#library {
+	position: fixed;
+}*/
+
+#pages {
+	width: 60%;
+}
+#livepreview,
+#mockup {
+	width: 30%;
+}
+
+// Heights

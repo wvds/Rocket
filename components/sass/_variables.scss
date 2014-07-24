@@ -2,13 +2,28 @@
 $experimental-support-for-khtml: false;
 
 // Flexbox
-$flexbox-legacy-support: -webkit, -moz, not -ms, not -o, not -khtml, not official;
-$flexbox-ie-support: not -webkit, not -moz, -ms, not -o, not -khtml, not official;
-$flexbox-standard-support: -webkit, not -moz, not -ms, not -o, not -khtml, official;
+$flexbox-legacy-support: -moz, -webkit, not -o, not -ms, not -khtml, not official;
+$flexbox-ie-support: not -moz, not -webkit, not -o, -ms, not -khtml, not official;
+$flexbox-standard-support: not -moz, -webkit, not -o, not -ms, not -khtml, official;;
+$flexbox-display-warnings: false !default;
+
+$default-justify-content: flex-start !default;
+$default-align-items: stretch !default;
+$default-align-self: stretch !default;
+$default-align-content: stretch !default;
+$default-order: 1 !default;
+$default-flex: 1 !default;
+$default-flex-grow: $default-flex !default;
+$default-flex-shrink: $default-flex !default;
+$default-flex-basis: $default-flex !default;
+$default-flex-direction: row !default;
+$default-flex-wrap: nowrap !default;
+$default-flex-flow: $default-flex-direction $default-flex-wrap !default;
 
 // Colorscheme
-$col_darkgray: #35393D;
+$col_lightgray:	#40454A;
+$col_darkgray: 	#35393D;
+$col_blue: 		#00ABC8;
 
-// Flex Ratio
-$flx_ratio_small: 1;
-$flx_ratio_big: 5;
+// Measurements
+$height_header: 60px;

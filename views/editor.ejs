@@ -11,6 +11,10 @@
 	<!-- JavaScript -->
 	<script src="../builds/development/js/main.js"></script>
     
+    <!-- Typekit Fonts -->
+    <script type="text/javascript" src="//use.typekit.net/pte5noj.js"></script>
+	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+    
 </head>
 <body>
 
@@ -20,20 +24,20 @@
 		
 		<section id="user">
 			<h1>User</h1>
-			<h1>Editor for <%= code %> jooooooo</h1>
+			<h1>Project <%= code %></h1>
 		</section>
 		
 		<section id="pages">
-			<h1 hidden>Pages</h1>
+			<h2 hidden>Pages</h2>
 			<ul>
-			<% pages.forEach(function(el) { %>
-				<a href=""><li><%= el.name %></li></a>
+			<% pages.forEach(function(page) { %>
+				<li><a href=""><%= page.name %></a></li>
 			<% }); %>
 			</ul>
 		</section>
 		
 		<section id="config">
-			<h1 hidden>Configuration</h1>
+			<h2>Configuration</h2>
 		</section>
 		
 	</header>
@@ -41,31 +45,50 @@
 	<main>
 		<section id="inspector">
 			<nav>
-				<a href="#">Style</a>
-				<a href="#">Element</a>
-				<a href="#">Group</a>
+				<a href="#"><h3>Style</h3></a>
+				<a href="#"><h3>Element</h3></a>
+				<a href="#"><h3>Group</h3></a>
 			</nav>
+			
+			<div>
+				Icon
+			</div>
+			
+			<form action="" method="post">
+				<label for="page">Add Page</label>
+				<input type="text" name="page">
+				<input type="submit" value="Verzenden">
+			</form>
+
+			<h2>Groups for <%= name %></h2>
+			<ul>
+			<% groups.forEach(function(el) { %>
+				<li><%= el.name %></li>
+			<% }); %>
+			</ul>
+
+			<h2>Elements for <%= name %></h2>
+			<ul>
+			<% elements.forEach(function(el) { %>
+				<li><%= el.name %></li>
+			<% }); %>
+			</ul>
+			
 		</section>
 
-		<form action="" method="post">
-			<label for="page">Add Page</label>
-			<input type="text" name="page">
-			<input type="submit">
-		</form>
-
-		<h2>Groups for <%= name %></h2>
-		<ul>
-		<% groups.forEach(function(el) { %>
-			<li><%= el.name %></li>
-		<% }); %>
-		</ul>
-
-		<h2>Elements for <%= name %></h2>
-		<ul>
-		<% elements.forEach(function(el) { %>
-			<li><%= el.name %></li>
-		<% }); %>
-		</ul>
+		
+		
+		<section id="livepreview">
+			Live Preview
+		</section>
+		
+		<section id="mockup">
+			Mockup preview
+		</section>
+		
+		<section id="library">
+			<h2>Library</h2>
+		</section>
 	</main>
 	
 </body>

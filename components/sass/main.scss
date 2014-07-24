@@ -1,26 +1,11 @@
 // Compass (Modules)
 @import 'compass';
 @import 'compass/reset';
+@import "susy";
 
 @import "variables";
 @import "mixins";
+@import "flexbox";
 @import "base";
 @import "layout";
 @import "modules";
-
-html {
-	height: 100%;
-}
-body {
-	font-size: 62.5%; // (Most) Browser Defaults: 1em = 16px
-	height: 100%;
-}
-header {
-	font-size: 2em;
-	width: 100%;
-	height: 100px;
-	background-color: $col_darkgray;	
-}
-section {
-	
-}

@@ -14,4 +14,6 @@ $(function() {
 	http://api.jqueryui.com/resizable/
 	http://viralpatel.net/blogs/jquery-resizable-draggable-resize-drag-tutorial-example/
 	*/
+	
+	$('#inspector').draggable();
 });
