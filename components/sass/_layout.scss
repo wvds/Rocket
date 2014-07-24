@@ -1,0 +1,28 @@
+header {
+	@include display-flex();
+	flex-flow: row nowrap;
+	
+	// TODO:
+	// http://the-echoplex.net/flexyboxes/
+	
+	section#user {
+		width: 20%;
+	}
+	section#pages {
+		ul {
+			@include display-flex();
+			flex-flow: row nowrap;
+			justify-content: flex-start;
+		}
+		
+		width: 60%;
+		background: #849;
+		align-self: flex-end;
+	}
+	section#config {
+		width: 20%;
+		text-align: right;
+		align-self: center;
+		background: #f02;
+	}
+}

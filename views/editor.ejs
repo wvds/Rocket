@@ -6,22 +6,46 @@
     
     <!-- CSS -->
 	<link rel="stylesheet" href="../builds/development/css/main.css">
+	<link rel="stylesheet" href="../node_modules/jquery-ui/themes/base/jquery-ui.css">
 	
 	<!-- JavaScript -->
-	<script src="../public/js/main.js"></script>
+	<script src="../builds/development/js/main.js"></script>
     
 </head>
 <body>
-	<section>
-		<h1>Editor for <%= code %></h1>
-	</section>
+
+	<h1 hidden>Rocket</h1>
+	
+	<header>
+		
+		<section id="user">
+			<h1>User</h1>
+			<h1>Editor for <%= code %> jooooooo</h1>
+		</section>
+		
+		<section id="pages">
+			<h1 hidden>Pages</h1>
+			<ul>
+			<% pages.forEach(function(el) { %>
+				<a href=""><li><%= el.name %></li></a>
+			<% }); %>
+			</ul>
+		</section>
+		
+		<section id="config">
+			<h1 hidden>Configuration</h1>
+		</section>
+		
+	</header>
+	
 	<main>
-		<h2>Pages for <%= name %></h2>
-		<ul>
-		<% pages.forEach(function(el) { %>
-			<li><%= el.name %></li>
-		<% }); %>
-		</ul>
+		<section id="inspector">
+			<nav>
+				<a href="#">Style</a>
+				<a href="#">Element</a>
+				<a href="#">Group</a>
+			</nav>
+		</section>
 
 		<form action="" method="post">
 			<label for="page">Add Page</label>

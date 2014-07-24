@@ -1,1 +1,14 @@
-$color1: blue;
+// Compass Configuration Support Variables
+$experimental-support-for-khtml: false;
+
+// Flexbox
+$flexbox-legacy-support: -webkit, -moz, not -ms, not -o, not -khtml, not official;
+$flexbox-ie-support: not -webkit, not -moz, -ms, not -o, not -khtml, not official;
+$flexbox-standard-support: -webkit, not -moz, not -ms, not -o, not -khtml, official;
+
+// Colorscheme
+$col_darkgray: #35393D;
+
+// Flex Ratio
+$flx_ratio_small: 1;
+$flx_ratio_big: 5;

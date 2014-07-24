@@ -63,11 +63,58 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   display: block;
 }
 
-/* line 10, ../components/sass/main.scss */
-h1 {
-  font-size: 1em;
-  color: blue;
-  -webkit-box-shadow: 0px 0px 5px #333333;
-  -moz-box-shadow: 0px 0px 5px #333333;
-  box-shadow: 0px 0px 5px #333333;
+/* line 1, ../components/sass/_layout.scss */
+header {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -o-flexbox;
+  display: -moz-flex;
+  display: flex;
+  flex-flow: row nowrap;
+}
+/* line 5, ../components/sass/_layout.scss */
+header section#user {
+  width: 20%;
+}
+/* line 8, ../components/sass/_layout.scss */
+header section#pages {
+  width: 60%;
+  background: #849;
+  align-self: flex-end;
+}
+/* line 9, ../components/sass/_layout.scss */
+header section#pages ul {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -o-flexbox;
+  display: -moz-flex;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+}
+/* line 19, ../components/sass/_layout.scss */
+header section#config {
+  width: 20%;
+  text-align: right;
+  align-self: center;
+  background: #f02;
+}
+
+/* line 11, ../components/sass/main.scss */
+html {
+  height: 100%;
+}
+
+/* line 14, ../components/sass/main.scss */
+body {
+  font-size: 62.5%;
+  height: 100%;
+}
+
+/* line 18, ../components/sass/main.scss */
+header {
+  font-size: 2em;
+  width: 100%;
+  height: 100px;
+  background-color: #35393d;
 }
