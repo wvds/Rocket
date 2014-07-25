@@ -204,11 +204,12 @@ main #inspector #sectionwrapper {
 /* line 39, ../../../components/sass/_layout.scss */
 main #inspector #sectionwrapper section {
   display: inline-block;
+  float: left;
   vertical-align: top;
   width: 350px;
-  height: 200px;
+  height: 100%;
 }
-/* line 52, ../../../components/sass/_layout.scss */
+/* line 53, ../../../components/sass/_layout.scss */
 main #inspector nav {
   -webkit-box-pack: justify;
   -moz-box-pack: justify;
@@ -222,7 +223,7 @@ main #inspector nav {
   align-items: center;
 }
 
-/* line 73, ../../../components/sass/_layout.scss */
+/* line 74, ../../../components/sass/_layout.scss */
 #user,
 #config,
 #inspector,
@@ -235,13 +236,18 @@ main #inspector nav {
 #library {
 	position: fixed;
 }*/
-/* line 86, ../../../components/sass/_layout.scss */
+/* line 87, ../../../components/sass/_layout.scss */
 #pages {
   width: 60%;
 }
 
-/* line 89, ../../../components/sass/_layout.scss */
+/* line 90, ../../../components/sass/_layout.scss */
 #livepreview,
 #mockup {
   width: 30%;
+}
+
+/* line 1, ../../../components/sass/_modules.scss */
+.loose {
+  position: fixed;
 }

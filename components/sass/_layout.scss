@@ -38,9 +38,10 @@ main {
 			
 			section {
 				display: inline-block;
+				float: left;
 				vertical-align: top;
 				width: 350px;
-				height: 200px;
+				height: 100%;
 			}
 			
 			white-space: nowrap;
