@@ -5,6 +5,9 @@
 # Exclude Node.js modules
 node_modules/*
 
+# Exclude Bourbon Library
+components/sass/bourbon/*
+
 # Exclude Sass cache
 .sass-cache/*
 .tmp

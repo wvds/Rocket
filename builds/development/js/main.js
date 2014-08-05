@@ -1,74 +1,200 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+var DragDrop = function() {
+	
+	var el = null,
+		rect = null,
+		prefix = null,
+		prevX = 0,
+		prevY = 0,
+		offsetX = null,
+		offsetY = null,
+		transX = 0,
+		transY = 0;
+	
+	this._init = function(vendor) {
+		
+		// Get vendor prefix for transform on drag
+		prefix = vendor;
+		
+		// Listen for all 'draggable' elements
+		el = document.getElementById('inspector');
+
+		el.addEventListener('dragstart', drag_start, false);
+		//el.addEventListener('drag', drag, false);
+		el.addEventListener('dragend', drag_end, false);
+
+		document.addEventListener('touchstart', touch_start, false);
+		el.addEventListener('touchmove', touch_move, false);
+		el.addEventListener('touchend', touch_end, false);
+		el.addEventListener('touchcancel', touch_cancel, false);
+		
+		//document.addEventListener('touchstart', function() {
+			// This event is needed for Chrome 36.0.19585.131 on Galaxy Tab 3
+		//}, false);
+
+		//dropzone.addEventListener('dragenter', handleDropEvent, false);
+		//dropzone.addEventListener('dragleave', handleDropEvent, false);
+		document.documentElement.addEventListener('dragover', drag_over, false); // Works like the 'drag' event on draggable object
+		document.addEventListener('drop', drop, false);
+	};
+	
+	function drag_start(e) {
+		// Use 'text' for IE 11 to work properly
+		e.dataTransfer.setData('text', this.innerHTML);
+		e.dataTransfer.effectAllowed = 'move';
+		e.dataTransfer.dropEffect = 'move';
+		
+		config(false, e);
+	}
+
+	function drag(e) {
+		console.log("dragging...");
+	}
+
+	function drag_end(e) {
+		done();
+	}
+	
+	function drag_over(e) {
+		if(e.preventDefault) e.preventDefault();
+		
+		update(e.clientX, e.clientY);
+		
+		return false;
+	}
+	
+	function drop(e) {
+		// Prevent Firefox from redirecting on drop
+		if(e.preventDefault) e.preventDefault();
+		if (e.stopPropagation) e.stopPropagation();
+		
+		// e.dataTransfer.getData('text/html');
+		
+		console.log("dropping...");
+	}
+	
+	// Touch Environment
+	function touch_start(e) {
+		if(e.preventDefault) e.preventDefault();
+		
+		// Only allow 'draggable' elements
+		if(!e.target.hasAttribute('draggable')) return;
+
+		config(true, e);
+		
+		return false;
+	}
+
+	function touch_move(e) {
+		if(e.preventDefault) e.preventDefault();
+
+		update(e.touches[0].clientX, e.touches[0].clientY);
+		
+		return false;
+	}
+	
+	function touch_end(e) {
+		done();
+	}
+	
+	function touch_cancel(e) {
+		console.log("cancelled...");
+	}
+	
+	function config(touch, e) {
+		el = document.getElementById(e.target.id);
+		
+		rect = el.getBoundingClientRect();
+		el.classList.add('drag');
+		
+		if(!touch) {
+			offsetX = e.clientX - rect.left;
+			offsetY = e.clientY - rect.top;
+		} else {
+			offsetX = e.touches[0].clientX - rect.left;
+			offsetY = e.touches[0].clientY - rect.top;
+		}
+
+		//e.dataTransfer.setDragImage(null, 0, 0);
+	}
+	
+	function update(x, y) {
+		// Calculate current drag distance
+		transX = x - offsetX - rect.left;
+		transY = y - offsetY - rect.top;
+		
+		// Assign new 3d position to dragged element
+		el.style[prefix] = 'translate3d(' + (prevX + transX) + 'px,' + (prevY + transY) + 'px,0)';
+	}
+	
+	function done() {
+		// Update new position of dropped element
+		prevX += transX;
+		prevY += transY;
+	}
+};
 // Browserify Requirements
 var $ = require('jquery');
 
 // DOM Loaded
 $(function() {
-	console.log("Hello World Rocket!");
 	
-	// Drag & Drop
-	var element = document.getElementById('inspector');
+	// TODO: Depending on support, do stuff
+	var dragdrop = new DragDrop(),
+		support = new Support();
 	
-	element.addEventListener('dragstart', handleDragStart, false);
-	element.addEventListener('drag', handleDrag, false);
-	
-	element.addEventListener('touchstart', handleTouchStart, false);
-	element.addEventListener('touchmove', handleTouchMove, false);
-	
-	//element.addEventListener('dragend', handleDragEnd, false);
-	
-	
-	//dropzone.addEventListener('dragenter', handleDropEvent, false);
-	//dropzone.addEventListener('dragleave', handleDropEvent, false);
-	document.documentElement.addEventListener('dragover', handleDragOver, false); // Works like the 'drag' event on draggable object
-	//dropzone.addEventListener('drop', handleDrop, false);
-	
-	function handleTouchStart(e) {
-		console.log("touched...");
-		$('#inspector').addClass('loose');
-		console.log("PageX Touch: " + e.touches[0].pageX);
-	}
-	
-	function handleTouchMove(e) {
-		console.log("touche moving...");
-		/*jshint validthis:true */
-		$('#' + this.id).css({
-			'top': e.touches[0].pageY,
-			'left': e.touches[0].pageX
-		});
-	}
-	
-	function handleDragStart(e) {
-		var id = this.id;
-		$('#inspector').addClass('loose');
-		console.log("Drag start with id: " + id);
-		console.log("ClientX: " + e.clientX);
-	}
-	
-	function handleDrag(e) {
-		$('#' + this.id).css({
-			'top': e.clientY,
-			'left': e.clientX
-		});
-	}
-	
-	function handleDragEnd(e) {
-		console.log("Drag end");
-	}
-	
-	function handleDrop(e) {
-		if(e.preventDefault) e.preventDefault(); // Firefox sometimes displays the image in a new windows when dropped
-		console.log("Drag dropped");
-	}
-	
-	// Neccessary for the drop event to occur!
-	function handleDragOver(e) {
-		
-		//console.log("sup");
-		if(e.preventDefault) e.preventDefault();
-		return false;
-	}
+	dragdrop._init(support.prefix.transform());
+
 });
+var Support = function() {
+	
+	// Touch
+	this.touch = function() {
+		return !!('ontouchstart' in window || 'onmsgesturechange' in window);
+	};
+	
+	// HTML5: Drag & Drop
+	this.draganddrop = function() {
+		if(navigator.appName == 'Microsoft Internet Explorer') {
+			var ua = navigator.userAgent;
+			var re = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
+			if(re.exec(ua) !== null) {
+				var rv = parseFloat(RegExp.$1);
+				if(rv >= 6.0) return true;
+			}
+			return false;
+		}
+		if('draggable' in document.createElement('span')) return true;
+		return false;
+	};
+	
+	// HTML5: Web Socket
+	this.websocket = function() {
+		return typeof(WebSocket) === "function";
+	};
+	
+	// Vendor Prefixes
+	this.prefix = {
+				
+		transform: function() {
+			
+			var ghost = document.createElement("div"),
+				prefixes = [
+					"transform", 
+					"msTransform", 
+					"MozTransform", 
+					"WebkitTransform", 
+					"OTransform"
+				];
+			
+			for (var i = 0; i < prefixes.length; ++i) {
+				if (typeof ghost.style[prefixes[i]] != 'undefined')
+					return prefixes[i];
+				}
+			return null;
+		}
+	};
+};
 },{"jquery":2}],2:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v2.1.1

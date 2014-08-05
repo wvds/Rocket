@@ -1,14 +1,15 @@
 // Requirements
 var	server = require('./server'),
 	gulp = require('gulp'),
+	sass = require('gulp-ruby-sass'),
 	gutil = require('gulp-util'),
 	browserify = require('gulp-browserify'),
 	concat = require('gulp-concat'),
 	gulpif = require('gulp-if'),
 	jshint = require('gulp-jshint'),
 	uglify = require('gulp-uglify'),
-	compass = require('gulp-compass'),
 	imagemin = require('gulp-imagemin'),
+	prefix = require('gulp-autoprefixer'),
 	pngcrush = require('imagemin-pngcrush'),
 	livereload = require('gulp-livereload');
 
@@ -40,17 +41,10 @@ gulp.task('js', function() {
 		.pipe(livereload());
 });
 
-gulp.task('compass', function() {
+gulp.task('sass', function() {
 	gulp.src(source_sass)
-		.pipe(
-	  		compass({
-				css: output_dir + 'css',
-				sass: 'components/sass',
-				image: output_dir + 'images',
-				style: sass_style,
-				require: ['susy']
-		  	})
-		  	.on('error', gutil.log))
+		.pipe(sass({style: 'expanded'}))
+		.pipe(prefix("last 10 version", "> 1%", "none", { cascade: true }))
 		.pipe(gulp.dest(output_dir + 'css'))
 		.pipe(livereload());
 });
@@ -75,9 +69,9 @@ gulp.task('watch', function() {
   	livereload.listen();
   	gulp.watch(source_html, ['html']);
   	gulp.watch(source_js, ['js']);
-  	gulp.watch('components/sass/*.scss', ['compass']);
+  	gulp.watch('components/sass/*.scss', ['sass']);
   	gulp.watch('builds/development/images/*.*', ['images']);
 });
 
 // Gulp Default Task
-gulp.task('default', ['html', 'js', 'compass', 'images', 'watch']);
+gulp.task('default', ['html', 'js', 'sass', 'images', 'watch']);

@@ -1,11 +1,10 @@
-// Compass (Modules)
-@import 'compass';
-@import 'compass/reset';
-@import "susy";
+// Bourbon
+@import 'bourbon/bourbon';
 
+// Custom Modules
+//@import "normalize";
 @import "variables";
 @import "mixins";
-@import "flexbox";
 @import "base";
 @import "layout";
 @import "modules";
