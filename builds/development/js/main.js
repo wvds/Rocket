@@ -11,13 +11,13 @@ var DragDrop = function() {
 		transX = 0,
 		transY = 0;
 	
-	this._init = function(vendor) {
+	this._init = function (vendor) {
 		
 		// Get vendor prefix for transform on drag
 		prefix = vendor;
 		
 		// Listen for all 'draggable' elements
-		el = document.getElementById('inspector');
+		el = document.getElementById('panel_style');
 
 		el.addEventListener('dragstart', drag_start, false);
 		//el.addEventListener('drag', drag, false);

@@ -17,7 +17,7 @@ module.exports = function(connection) {
 	rocket.use(require('connect-livereload')());
 	rocket.use(express.static(__dirname));
 	rocket.use(cookieParser());
-	rocket.use(bodyParser());
+	rocket.use(bodyParser.urlencoded());
 	rocket.use(session({
         secret: 'rocketio',
 		store: new mongo_store({
