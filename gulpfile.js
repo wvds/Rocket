@@ -8,9 +8,9 @@ var	server = require('./server'),
 	gulpif = require('gulp-if'),
 	jshint = require('gulp-jshint'),
 	uglify = require('gulp-uglify'),
-	imagemin = require('gulp-imagemin'),
+	//imagemin = require('gulp-imagemin'),
+    //pngcrush = require('imagemin-pngcrush'),
 	prefix = require('gulp-autoprefixer'),
-	pngcrush = require('imagemin-pngcrush'),
 	livereload = require('gulp-livereload');
 
 // Sources
@@ -54,7 +54,7 @@ gulp.task('html', function() {
 		.pipe(livereload())
 });
 
-gulp.task('images', function() {
+/*gulp.task('images', function() {
   gulp.src('builds/development/images/*.*')
   	.pipe(gulpif(env === 'production', imagemin({
 		progressive: true,
@@ -63,15 +63,15 @@ gulp.task('images', function() {
 	})))
   	.pipe(gulpif(env === 'production', gulp.dest(output_dir + 'images')))
   	.pipe(livereload());
-});
+});*/
 
 gulp.task('watch', function() {
   	livereload.listen();
   	gulp.watch(source_html, ['html']);
   	gulp.watch(source_js, ['js']);
   	gulp.watch('components/sass/*.scss', ['sass']);
-  	gulp.watch('builds/development/images/*.*', ['images']);
+  	//gulp.watch('builds/development/images/*.*', ['images']);
 });
 
 // Gulp Default Task
-gulp.task('default', ['html', 'js', 'sass', 'images', 'watch']);
+gulp.task('default', ['html', 'js', 'sass', 'watch']);

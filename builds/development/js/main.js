@@ -2,14 +2,17 @@
 var DragDrop = function() {
 	
 	var el = null,
+        id = null,
 		rect = null,
 		prefix = null,
-		prevX = 0,
-		prevY = 0,
+        prevState = null,
+        dropzone = null,
 		offsetX = null,
 		offsetY = null,
-		transX = 0,
-		transY = 0;
+        isEmpty = false,
+        dock = null,
+        gui = {};
+
 	
 	this._init = function (vendor) {
 		
@@ -17,24 +20,23 @@ var DragDrop = function() {
 		prefix = vendor;
 		
 		// Listen for all 'draggable' elements
-		el = document.getElementById('panel_style');
+		//el = document.getElementById('panel-style');
 
-		el.addEventListener('dragstart', drag_start, false);
-		//el.addEventListener('drag', drag, false);
-		el.addEventListener('dragend', drag_end, false);
-
-		document.addEventListener('touchstart', touch_start, false);
-		el.addEventListener('touchmove', touch_move, false);
-		el.addEventListener('touchend', touch_end, false);
-		el.addEventListener('touchcancel', touch_cancel, false);
-		
-		//document.addEventListener('touchstart', function() {
-			// This event is needed for Chrome 36.0.19585.131 on Galaxy Tab 3
-		//}, false);
-
-		//dropzone.addEventListener('dragenter', handleDropEvent, false);
-		//dropzone.addEventListener('dragleave', handleDropEvent, false);
-		document.documentElement.addEventListener('dragover', drag_over, false); // Works like the 'drag' event on draggable object
+        var setElem = document.getElementById('panel-style');
+        
+        dropzone = document.getElementById('dock-left');
+        dropzone.addEventListener('dragover', drag_over_dropzone, false);
+        dropzone.addEventListener('dragenter', drag_enter, false);
+        dropzone.addEventListener('dragleave', drag_leave, false);
+        
+		setElem.addEventListener('dragstart', drag_start, false);
+		setElem.addEventListener('dragend', drag_end, false);
+		setElem.addEventListener('touchmove', touch_move, false);
+		setElem.addEventListener('touchend', touch_end, false);
+		setElem.addEventListener('touchcancel', touch_cancel, false);
+        
+        document.addEventListener('touchstart', touch_start, false);
+		document.documentElement.addEventListener('dragover', drag_over, false); 
 		document.addEventListener('drop', drop, false);
 	};
 	
@@ -43,44 +45,72 @@ var DragDrop = function() {
 		e.dataTransfer.setData('text', this.innerHTML);
 		e.dataTransfer.effectAllowed = 'move';
 		e.dataTransfer.dropEffect = 'move';
-		
-		config(false, e);
+        
+		on_drag_start(false, e);
 	}
 
-	function drag(e) {
-		console.log("dragging...");
-	}
-
-	function drag_end(e) {
-		done();
-	}
-	
-	function drag_over(e) {
+    function drag_over(e) {
 		if(e.preventDefault) e.preventDefault();
-		
-		update(e.clientX, e.clientY);
-		
+        if(e.stopPropagation) e.stopPropagation();
+        
+		on_drag(e.clientX, e.clientY);
+		el.style.pointerEvents = 'none';
+        
 		return false;
 	}
+    
+    function drag_over_dropzone(e) {
+
+    }
+    
+	function drag_end(e) {
+        console.log("dragend..");
+	}
+    
+    function drag_enter(e) {
+        
+        if(prevState === null) {
+            prevState = dock.dataset.state;
+        }
+
+        // Expand dock if empty
+        if(dock.dataset.state === 'collapsed') {
+           dock.dataset.state = 'expanded';
+        }
+    }
+    
+    function drag_leave(e) {
+        // Collapse dock if empty
+        if(isEmpty || prevState === 'collapsed') {
+            dock.dataset.state = 'collapsed';
+        }
+    }
 	
 	function drop(e) {
 		// Prevent Firefox from redirecting on drop
 		if(e.preventDefault) e.preventDefault();
 		if (e.stopPropagation) e.stopPropagation();
-		
+        
+        /* 
+        // Use the 'done' function here instead of on the dragend event,
+        // because the event.target in this 'drop' function is the dragged
+        // dropzone (instead of the dragged element itself), 
+        // which we need to identify a valid dropzone.
+        */
+
+        on_drop(false, e);
+
 		// e.dataTransfer.getData('text/html');
-		
-		console.log("dropping...");
 	}
 	
 	// Touch Environment
 	function touch_start(e) {
-		if(e.preventDefault) e.preventDefault();
+		//if(e.preventDefault) e.preventDefault();
 		
 		// Only allow 'draggable' elements
-		if(!e.target.hasAttribute('draggable')) return;
+		if(e.target.getAttribute('draggable') !== 'true') return;
 
-		config(true, e);
+		on_drag_start(true, e);
 		
 		return false;
 	}
@@ -88,25 +118,64 @@ var DragDrop = function() {
 	function touch_move(e) {
 		if(e.preventDefault) e.preventDefault();
 
-		update(e.touches[0].clientX, e.touches[0].clientY);
+        // Only allow 'draggable' elements
+        if(e.target.getAttribute('draggable') !== 'true') return;
+        
+		on_drag(e.touches[0].clientX, e.touches[0].clientY);
 		
 		return false;
 	}
 	
 	function touch_end(e) {
-		done();
+        
+        // Only allow 'draggable' elements
+        if(e.target.getAttribute('draggable') !== 'true') return;
+        
+        on_drop(true, e);
 	}
 	
 	function touch_cancel(e) {
 		console.log("cancelled...");
 	}
 	
-	function config(touch, e) {
-		el = document.getElementById(e.target.id);
-		
+    // Private functions
+	function on_drag_start(touch, e) {
+        id = e.target.id;
+        el = document.getElementById(id);
+        
+        // Add panel to gui object
+        if(!gui.hasOwnProperty(id)) {
+            gui[id] = {};
+        }
+        
 		rect = el.getBoundingClientRect();
-		el.classList.add('drag');
+        dock = e.target.parentNode;
+        isEmpty = true;
+        
+        // Use datasets for 'docked' or 'loose' state
+        document.querySelector('.panel-top').className.replace('panel-top', '');
+        
+        // Used to position element
+		el.dataset.state = 'loose';
 		
+        // Used to manipulate the z-index
+        el.classList.add('panel-top');
+        
+        // Check every panel in the dock
+        for(var panel in dock.childNodes) {
+
+            // Only the first inheritence of children
+            if(dock.childNodes[panel].nodeType === 1) {
+                
+                // If one of the panels is not loose, set flag
+                if(dock.childNodes[panel].dataset.state === 'docked') {
+                    isEmpty = false;
+                    break;
+                }
+            }
+        }
+
+        // Calculate offset once per drag
 		if(!touch) {
 			offsetX = e.clientX - rect.left;
 			offsetY = e.clientY - rect.top;
@@ -114,23 +183,42 @@ var DragDrop = function() {
 			offsetX = e.touches[0].clientX - rect.left;
 			offsetY = e.touches[0].clientY - rect.top;
 		}
+        
+        // Reset position for when element gets 'docked'
+        el.style.left = gui[id].posX + 'px';
+        el.style.top = gui[id].posY + 'px';
 
 		//e.dataTransfer.setDragImage(null, 0, 0);
 	}
 	
-	function update(x, y) {
-		// Calculate current drag distance
-		transX = x - offsetX - rect.left;
-		transY = y - offsetY - rect.top;
-		
-		// Assign new 3d position to dragged element
-		el.style[prefix] = 'translate3d(' + (prevX + transX) + 'px,' + (prevY + transY) + 'px,0)';
+	function on_drag(x, y) {
+        el.style.left = (x - offsetX) + 'px';
+        el.style.top = (y - offsetY) + 'px';
 	}
 	
-	function done() {
-		// Update new position of dropped element
-		prevX += transX;
-		prevY += transY;
+	function on_drop(touch, e) {
+        // Reset pointer events for new interaction
+        el.style.pointerEvents = 'auto';
+        
+        // Reset state, used for 'collapsed' state on '.dock' when not empty
+        prevState = null;
+        
+        // Event target not accessible on touch screen
+        if(!touch) {
+            if(e.target.getAttribute('dropzone') === 'move') {
+                gui[id].state = (el.dataset.state = 'docked');
+            }
+        }
+        
+        // Save information into the 'gui' object
+        gui[id].state = el.dataset.state;
+    
+        // Redefine rectangle to get new position
+        rect = el.getBoundingClientRect();
+        
+        // Update position
+        gui[id].posX = rect.left;
+        gui[id].posY = rect.top;
 	}
 };
 // Browserify Requirements
@@ -146,6 +234,21 @@ $(function() {
 	dragdrop._init(support.prefix.transform());
 
 });
+
+(function() {
+    
+    // Dock control
+    $(document).on('click', '.btn-dock', function(e) {
+        if(e.preventDefault) e.preventDefault();
+        
+        var el = $(this).parent('.dock');
+        
+        el.attr('data-state', 
+            el.attr('data-state') === 'expanded' ? 'collapsed' : 'expanded');
+        
+        return false;
+    });
+})();
 var Support = function() {
 	
 	// Touch

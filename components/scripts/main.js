@@ -11,3 +11,18 @@ $(function() {
 	dragdrop._init(support.prefix.transform());
 
 });
+
+(function() {
+    
+    // Dock control
+    $(document).on('click', '.btn-dock', function(e) {
+        if(e.preventDefault) e.preventDefault();
+        
+        var el = $(this).parent('.dock');
+        
+        el.attr('data-state', 
+            el.attr('data-state') === 'expanded' ? 'collapsed' : 'expanded');
+        
+        return false;
+    });
+})();

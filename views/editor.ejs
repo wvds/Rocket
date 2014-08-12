@@ -1,18 +1,21 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <title>Rocket Editor</title>
-    
+
     <!-- CSS -->
-	<link rel="stylesheet" href="../builds/development/css/main.css">
-	
-	<!-- JavaScript -->
-	<script src="../builds/development/js/main.js"></script>
-    
+    <link rel="stylesheet" href="../builds/development/css/main.css">
+
+    <!-- JavaScript -->
+    <script src="../builds/development/js/main.js"></script>
+
     <!-- Typekit Fonts -->
     <script type="text/javascript" src="//use.typekit.net/pte5noj.js"></script>
-	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+    
+    <!-- Font Awesome | Temporary -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     
 </head>
 <body>
@@ -41,55 +44,29 @@
 	</header>
 	
 	<main>
-		<section id="inspector">
-		    <section id="panel_style" draggable="true">
-			    Test
+	
+	    <!--
+           DOCK
+            id                 Used to identify the dock for collapsing off screen (left or right)
+            class              Used for Module CSS Styles of 'dock' class
+           
+           PANEL
+            id                 Used for JavaScript positioning
+	        class              Used for Module CSS Styles of 'panel' class
+        -->
+	
+		<section id="dock-left" class="dock" data-state="expanded" dropzone="move">
+       
+            <a href="#" class="btn-dock"><<</a>
+        
+		    <section id="panel-style" class="panel panel-top" data-state="docked" draggable="true">
+			    Style
 			</section>
-			<!--<nav>
-				<a href="#">Style</a>
-				<a href="#">Element</a>
-				<a href="#">Group</a>
-			</nav>
-			<section id="panels">
-				<section>
-
-					<div>
-						Icon
-					</div>
-
-					<form action="" method="post">
-						<label for="page">Add Page</label>
-						<input type="text" name="page">
-						<input type="submit" value="Verzenden">
-					</form>
-
-				</section>
-				<section>
-					<div>
-						Icon
-					</div>
-
-					<h2>Elements for <%= name %></h2>
-					<ul>
-					<% elements.forEach(function(el) { %>
-						<li><%= el.name %></li>
-					<% }); %>
-					</ul>
-				</section>
-				<section>
-
-					<div>
-						Icon
-					</div>
-
-					<h2>Groups for <%= name %></h2>
-					<ul>
-					<% groups.forEach(function(el) { %>
-						<li><%= el.name %></li>
-					<% }); %>
-					</ul>
-				</section>
-			</section>-->
+			
+			<section id="panel-element" class="panel" data-state="docked" draggable="true">
+			    Element
+			</section>
+			
 		</section>
 		
 		
@@ -105,6 +82,7 @@
 		<section id="library">
 			<h2>Library</h2>
 		</section>
+		
 	</main>
 	<script src="http://jsconsole.com/remote.js?1964EC8C-6F16-4CD9-BE9B-92B30AB03721"></script>
 </body>

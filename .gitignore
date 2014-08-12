@@ -1,6 +1,9 @@
 # Exclude any PSD/AI source files
 *.psd
 *.ai
+
+# Exclude any Adobe Swatch Exchange files
+*.ase
  
 # Exclude Node.js modules
 node_modules/*
