@@ -1,0 +1,13 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg">
+<metadata>Copyright (C) 2014 by original authors @ fontello.com</metadata>
+<defs>
+<font id="icon-font-test" horiz-adv-x="1000" >
+<font-face font-family="icon-font-test" font-weight="400" font-stretch="normal" units-per-em="1000" ascent="850" descent="-150" />
+<missing-glyph horiz-adv-x="1000" />
+<glyph glyph-name="th-list" unicode="&#xe800;" d="m0 46v108q0 22 16 38t38 15h178q22 0 38-15t16-38v-108q0-22-16-37t-38-16h-178q-23 0-38 16t-16 37z m0 286v107q0 23 16 38t38 16h178q22 0 38-16t16-38v-107q0-22-16-38t-38-15h-178q-23 0-38 15t-16 38z m0 286v107q0 22 16 38t38 16h178q22 0 38-16t16-38v-107q0-22-16-38t-38-16h-178q-23 0-38 16t-16 38z m357-572v108q0 22 16 38t38 15h535q23 0 38-15t16-38v-108q0-22-16-37t-38-16h-535q-23 0-38 16t-16 37z m0 286v107q0 23 16 38t38 16h535q23 0 38-16t16-38v-107q0-22-16-38t-38-15h-535q-23 0-38 15t-16 38z m0 286v107q0 22 16 38t38 16h535q23 0 38-16t16-38v-107q0-22-16-38t-38-16h-535q-23 0-38 16t-16 38z" horiz-adv-x="1000" />
+<glyph glyph-name="plus" unicode="&#xe801;" d="m0 332v107q0 23 16 38t38 16h232v232q0 22 15 38t38 16h107q23 0 38-16t16-38v-232h232q22 0 38-16t16-38v-107q0-22-16-38t-38-16h-232v-232q0-22-16-38t-38-15h-107q-22 0-38 15t-15 38v232h-232q-23 0-38 16t-16 38z" horiz-adv-x="785.7" />
+</font>
+</defs>
+</svg>

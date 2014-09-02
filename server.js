@@ -1,5 +1,5 @@
 var connection = require('./db'),
-	app = require('./rocket')(connection),
+	app = require('./app')(connection),
 	EXPRESS_PORT = 8000;
 
 app.listen(EXPRESS_PORT, function() {

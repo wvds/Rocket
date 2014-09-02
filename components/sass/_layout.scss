@@ -6,20 +6,21 @@
     4. Text
     5. Other
 
+    Syntax:
+    hyphen-delimited
+
 */
-
-html, body {
-    height: 100%;
+body {
+    overflow: hidden;
 }
-
 header {
 	width: 100%;
-	background: gray;
+	background: $main-gray;
     height: $header-height;
 }
 
 main {
-    height: calc(100% - #{$header-height});
+    height: calc(100vh - #{$header-height});
     
     > section {
         display: inline-block;
@@ -29,12 +30,14 @@ main {
 
 .dock {
     // Box
-    height: 100%;
-    width: 200px;
+    position: absolute;
+    width: $panel-width;
+    height: calc(100vh - #{$header-height});
     
     // Background
-    background: red;
+    background: $main-gray;
     
     // Other
     transition: all .3s ease;
+    clear: both;
 }

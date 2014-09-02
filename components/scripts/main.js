@@ -12,17 +12,24 @@ $(function() {
 
 });
 
-(function() {
+
+// Dock control
+$(document).on('click', '.btn-dock', function(e) {
+    if(e.preventDefault) e.preventDefault();
+
+    var el = $(this).parent('.dock');
+
+    el.attr('data-state', 
+        el.attr('data-state') === 'expanded' ? 'collapsed' : 'expanded');
+
+    return false;
+});
+
+// Panel control
+$(document).on('click', '#btn-style-add', function(e) {
+    if(e.preventDefault) e.preventDefault();
     
-    // Dock control
-    $(document).on('click', '.btn-dock', function(e) {
-        if(e.preventDefault) e.preventDefault();
-        
-        var el = $(this).parent('.dock');
-        
-        el.attr('data-state', 
-            el.attr('data-state') === 'expanded' ? 'collapsed' : 'expanded');
-        
-        return false;
-    });
-})();
+    
+    
+    return false;
+});

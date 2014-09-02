@@ -5,6 +5,7 @@ module.exports = function() {
         scm_project = require('../schemas/project'),
         scm_element = require('../schemas/element'),
         scm_group = require('../schemas/group'),
+        scm_user = require('../schemas/user');
         query = {};
     
     // Query error
@@ -12,7 +13,7 @@ module.exports = function() {
         return res.status(500).json({status: 'Connection Error'});
     }
     
-    // Get all projects
+    // Project Queries
     query.get_projects = function(req, res, callback) {
         
         scm_project_user

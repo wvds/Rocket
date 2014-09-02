@@ -6,19 +6,25 @@
     4. Text
     5. Other
 
+    Syntax:
+    hyphen-delimited
+
 */
 
 // Dock
-.dock[data-state=collapsed] {
-    margin-left: -150px;
+#dock-left[data-state=collapsed] {
+    left: -1 * $panel-width + $btn-res;
+}
+#dock-right[data-state=collapsed] {
+    right: -1 * $panel-width + $btn-res;
 }
 
 // Panel
-.panel[data-state=loose] {
+[data-state=loose] {
 	position: fixed;
 }
 
-.panel-top {
-    z-index: 10;
+[data-priority=top] {
+    z-index: 10 !important;
     cursor: grabbing;
 }

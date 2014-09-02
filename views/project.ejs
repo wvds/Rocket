@@ -12,7 +12,7 @@
     
 </head>
 <body>
-	Mijn Projecten
+	Mijn Projecten - <%= usertype %>
 	<% projects.forEach(function(el) { %>
             <a href="./project/<%= el.project_id.code %>">
             <%= el.project_id.name %></a>

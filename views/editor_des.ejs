@@ -1,9 +1,16 @@
 <!doctype html>
 <html lang="en">
 <head>
+    
+    <!-- Meta Tags -->
     <meta charset="utf-8">
-    <title>Rocket Editor</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    
+    <!-- Title -->
+    <title>
+        Rocket Editor | Designer
+    </title>
+   
     <!-- CSS -->
     <link rel="stylesheet" href="../builds/development/css/main.css">
 
@@ -45,30 +52,39 @@
 	
 	<main>
 	
-	    <!--
-           DOCK
-            id                 Used to identify the dock for collapsing off screen (left or right)
-            class              Used for Module CSS Styles of 'dock' class
-           
-           PANEL
-            id                 Used for JavaScript positioning
-	        class              Used for Module CSS Styles of 'panel' class
-        -->
-	
 		<section id="dock-left" class="dock" data-state="expanded" dropzone="move">
        
-            <a href="#" class="btn-dock"><<</a>
+            <a href="#" class="btn-dock">close</a>
         
-		    <section id="panel-style" class="panel panel-top" data-state="docked" draggable="true">
-			    Style
+		    <section id="panel-style" class="panel" data-state="docked" data-priority="top">
+			    <h2 class="draghandle" draggable="true">Style</h2>
+			    <nav>
+                    <ul>
+                        <li>
+                            <a href="#" id="btn-style-list">
+                                <span aria-hidden="true" data-icon="&#xE800;"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" id="btn-style-add">
+                                <span aria-hidden="true" data-icon="&#xE801;"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <div>
+                    List of Styles
+                </div>
+                <div>
+                    Add new Style
+                </div>
 			</section>
 			
-			<section id="panel-element" class="panel" data-state="docked" draggable="true">
-			    Element
+			<section id="panel-element" class="panel" data-state="docked" data-priority="idle">
+			    <h2 class="draghandle" draggable="true">Element</h2>
 			</section>
 			
 		</section>
-		
 		
 		<section id="livepreview">
 			Live Preview
@@ -79,8 +95,8 @@
 			Mockup preview
 		</section>
 		
-		<section id="library">
-			<h2>Library</h2>
+		<section id="dock-right" class="dock" data-state="collapsed" dropzone="true">
+		    
 		</section>
 		
 	</main>

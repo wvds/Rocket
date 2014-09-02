@@ -1,8 +1,8 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var DragDrop = function() {
 	
+    // Private Variables
 	var el = null,
-        id = null,
 		rect = null,
 		prefix = null,
         prevState = null,
@@ -10,217 +10,251 @@ var DragDrop = function() {
 		offsetX = null,
 		offsetY = null,
         isEmpty = false,
-        dock = null,
+        touch = false,
         gui = {};
 
-	
+	// Public Methods
 	this._init = function (vendor) {
-		
+        
 		// Get vendor prefix for transform on drag
 		prefix = vendor;
 		
-		// Listen for all 'draggable' elements
-		//el = document.getElementById('panel-style');
-
-        var setElem = document.getElementById('panel-style');
-        
-        dropzone = document.getElementById('dock-left');
-        dropzone.addEventListener('dragover', drag_over_dropzone, false);
-        dropzone.addEventListener('dragenter', drag_enter, false);
-        dropzone.addEventListener('dragleave', drag_leave, false);
-        
-		setElem.addEventListener('dragstart', drag_start, false);
-		setElem.addEventListener('dragend', drag_end, false);
-		setElem.addEventListener('touchmove', touch_move, false);
-		setElem.addEventListener('touchend', touch_end, false);
-		setElem.addEventListener('touchcancel', touch_cancel, false);
-        
-        document.addEventListener('touchstart', touch_start, false);
-		document.documentElement.addEventListener('dragover', drag_over, false); 
+        document.documentElement.addEventListener('dragover', drag, false); 
 		document.addEventListener('drop', drop, false);
-	};
-	
-	function drag_start(e) {
-		// Use 'text' for IE 11 to work properly
-		e.dataTransfer.setData('text', this.innerHTML);
-		e.dataTransfer.effectAllowed = 'move';
-		e.dataTransfer.dropEffect = 'move';
         
-		on_drag_start(false, e);
-	}
+        // Listen for all 'draggable' and 'droppable' elements
+        var panels = document.querySelectorAll('[draggable]'),
+            docks = document.querySelectorAll('[dropzone]');
+        
+        for(var i = 0; i < panels.length; i++) {
+            // Get id from parent node in HTML document
+            var draggable = document.getElementById(panels[i].parentNode.id);
 
-    function drag_over(e) {
-		if(e.preventDefault) e.preventDefault();
+            // Once the parent id is found, go back down to child element
+            // with 'draghandle' class
+            draggable = draggable.getElementsByClassName('draghandle');
+            
+            // Because 'getElementByClassName' returns a list of object,
+            // only get the first one by using [0]
+            draggable[0].addEventListener('dragstart', dragStart, false);
+            draggable[0].addEventListener('touchstart', dragStart, false);        
+            draggable[0].addEventListener('touchmove', drag, false);
+            draggable[0].addEventListener('touchend', drop, false);
+        }
+        
+        for(var j = 0; j < docks.length; j++) {
+            var droppable = document.getElementById(docks[j].id);
+            droppable.addEventListener('dragenter', dragEnter, false);
+            droppable.addEventListener('dragleave', dragLeave, false);
+        }
+        
+	}; // END PUBLIC _init
+	
+    // Private Methods
+    function dragStart(e) {
+        
+        console.log(e.target.parentNode.id);
+        
+        if(typeof e.touches !== 'undefined') touch = true;
+        
+        el = document.getElementById(e.target.parentNode.id);
+        
+        rect = el.getBoundingClientRect();
+        
+        // Add panel to gui object, if not exists, to prevent overwriting props
+        if(!gui.hasOwnProperty(el.id)) gui[el.id] = { 'posX': rect.left, 'posY': rect.top };
+		
+        //isEmpty = true;
+        
+        // Calculate offset once per drag
+        if(!touch) {
+            // Use 'text' for IE 11 to work properly
+            e.dataTransfer.setData('text', this.innerHTML);
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.dropEffect = 'move';
+            
+            offsetX = e.clientX - rect.left;
+			offsetY = e.clientY - rect.top;
+        } else {
+            offsetX = e.targetTouches[0].clientX - rect.left;
+			offsetY = e.targetTouches[0].clientY - rect.top;
+        }
+
+        // Set all panels with 'top' to 'idle' mode (so they reside in the background)
+        var topNode = document.getElementById(document.querySelectorAll('[data-priority="top"]')[0].id);
+        topNode.dataset.priority = 'idle';
+        
+        // Trigger IE reflow after changing 'data-*' attribute value
+        topNode.className = topNode.className;
+        
+        // Put active panel on top of all other panels on screen
+        el.dataset.priority = 'top';
+        
+        // Trigger IE reflow
+        el.className = el.className;
+
+        // Set current position based on 'rect' and update the gui object accordingly
+        el.style.left = (gui[el.id].posX = rect.left) + 'px';
+        el.style.top = (gui[el.id].posY = rect.top) + 'px';
+        
+        // Append panel to the body
+        if(el.dataset.state === 'docked') {
+            el.dataset.state = 'loose';
+            document.getElementsByTagName('body')[0].appendChild(el);
+        }
+
+		//e.dataTransfer.setDragImage(null, 0, 0);
+        
+        return false;
+	} // END PRIVATE dragStart
+    
+    function drag(e) {
+        if(e.preventDefault) e.preventDefault();
         if(e.stopPropagation) e.stopPropagation();
         
-		on_drag(e.clientX, e.clientY);
-		el.style.pointerEvents = 'none';
+        var x = null,
+            y = null;
         
-		return false;
-	}
-    
-    function drag_over_dropzone(e) {
-
-    }
-    
-	function drag_end(e) {
-        console.log("dragend..");
-	}
-    
-    function drag_enter(e) {
-        
-        if(prevState === null) {
-            prevState = dock.dataset.state;
-        }
-
-        // Expand dock if empty
-        if(dock.dataset.state === 'collapsed') {
-           dock.dataset.state = 'expanded';
-        }
-    }
-    
-    function drag_leave(e) {
-        // Collapse dock if empty
-        if(isEmpty || prevState === 'collapsed') {
-            dock.dataset.state = 'collapsed';
-        }
-    }
-	
-	function drop(e) {
-		// Prevent Firefox from redirecting on drop
-		if(e.preventDefault) e.preventDefault();
-		if (e.stopPropagation) e.stopPropagation();
-        
-        /* 
-        // Use the 'done' function here instead of on the dragend event,
-        // because the event.target in this 'drop' function is the dragged
-        // dropzone (instead of the dragged element itself), 
-        // which we need to identify a valid dropzone.
-        */
-
-        on_drop(false, e);
-
-		// e.dataTransfer.getData('text/html');
-	}
-	
-	// Touch Environment
-	function touch_start(e) {
-		//if(e.preventDefault) e.preventDefault();
-		
-		// Only allow 'draggable' elements
-		if(e.target.getAttribute('draggable') !== 'true') return;
-
-		on_drag_start(true, e);
-		
-		return false;
-	}
-
-	function touch_move(e) {
-		if(e.preventDefault) e.preventDefault();
-
-        // Only allow 'draggable' elements
-        if(e.target.getAttribute('draggable') !== 'true') return;
-        
-		on_drag(e.touches[0].clientX, e.touches[0].clientY);
-		
-		return false;
-	}
-	
-	function touch_end(e) {
-        
-        // Only allow 'draggable' elements
-        if(e.target.getAttribute('draggable') !== 'true') return;
-        
-        on_drop(true, e);
-	}
-	
-	function touch_cancel(e) {
-		console.log("cancelled...");
-	}
-	
-    // Private functions
-	function on_drag_start(touch, e) {
-        id = e.target.id;
-        el = document.getElementById(id);
-        
-        // Add panel to gui object
-        if(!gui.hasOwnProperty(id)) {
-            gui[id] = {};
+        if(!touch) {
+            el.style.pointerEvents = 'none';
+            x = e.clientX;
+            y = e.clientY;
+        } else {
+            
+            dragEnter(e);
+            
+            x = e.targetTouches[0].clientX;
+            y = e.targetTouches[0].clientY;
         }
         
-		rect = el.getBoundingClientRect();
-        dock = e.target.parentNode;
-        isEmpty = true;
+        el.style.left = (x - offsetX) + 'px';
+        el.style.top = (y - offsetY) + 'px';
         
-        // Use datasets for 'docked' or 'loose' state
-        document.querySelector('.panel-top').className.replace('panel-top', '');
-        
-        // Used to position element
-		el.dataset.state = 'loose';
-		
-        // Used to manipulate the z-index
-        el.classList.add('panel-top');
-        
-        // Check every panel in the dock
-        for(var panel in dock.childNodes) {
+        return false;
+	} // END PRIVATE drag
+    
+    function dragEnter(e) {
 
-            // Only the first inheritence of children
-            if(dock.childNodes[panel].nodeType === 1) {
+        var target = null,
+            touches = null;
+        
+        // Check for touch interaction
+        if(!touch) {
+            // Touch disabled
+            target = e.target;
+        } else {
+            // Touch enabled
+            touches = e.targetTouches[0];
+            target = document.elementFromPoint(touches.clientX, touches.clientY);
+            el.style.pointerEvents = 'none';
+        }
+        
+        if(target.hasAttribute('dropzone')) {
+            
+            // Get current dropzone
+            dropzone = document.getElementById(target.id);
+            
+            // Add dropzone to gui object, if not exists, to prevent overwriting props
+            if(!gui.hasOwnProperty(dropzone.id)) gui[dropzone.id] = {};
+
+            gui[dropzone.id].empty = true;
+            
+            if(prevState === null) {
+                prevState = dropzone.dataset.state;
+            }
+
+            // Expand dock if empty
+            if(dropzone.dataset.state === 'collapsed') {
+                updateGUI('expanded');
+            }
+
+            // Check every panel in the dock
+            for(var panel in dropzone.childNodes) {
+
+                var childNode = dropzone.childNodes[panel];
                 
-                // If one of the panels is not loose, set flag
-                if(dock.childNodes[panel].dataset.state === 'docked') {
-                    isEmpty = false;
+                // Only direct descendants (node children) with a 'panel' class
+                if(childNode.nodeType === 1 && childNode.classList.contains('panel')) {
+                    gui[dropzone.id].empty = false;
                     break;
                 }
             }
+            
+        } else if(touches) {
+            dragLeave();
         }
-
-        // Calculate offset once per drag
-		if(!touch) {
-			offsetX = e.clientX - rect.left;
-			offsetY = e.clientY - rect.top;
-		} else {
-			offsetX = e.touches[0].clientX - rect.left;
-			offsetY = e.touches[0].clientY - rect.top;
-		}
+    } // END PRIVATE dragEnter
+    
+    function dragLeave() {
         
-        // Reset position for when element gets 'docked'
-        el.style.left = gui[id].posX + 'px';
-        el.style.top = gui[id].posY + 'px';
-
-		//e.dataTransfer.setDragImage(null, 0, 0);
-	}
-	
-	function on_drag(x, y) {
-        el.style.left = (x - offsetX) + 'px';
-        el.style.top = (y - offsetY) + 'px';
-	}
-	
-	function on_drop(touch, e) {
-        // Reset pointer events for new interaction
-        el.style.pointerEvents = 'auto';
-        
-        // Reset state, used for 'collapsed' state on '.dock' when not empty
-        prevState = null;
-        
-        // Event target not accessible on touch screen
-        if(!touch) {
-            if(e.target.getAttribute('dropzone') === 'move') {
-                gui[id].state = (el.dataset.state = 'docked');
+        if(dropzone !== null) {
+            if(gui[dropzone.id].empty || prevState === 'collapsed') {
+                updateGUI('collapsed');
             }
         }
         
+        // Left the area, reset dropzone
+        dropzone = null;
+        
+    } // END dragLeave
+	
+	function drop(e) {
+        
+        // Prevent Firefox from redirecting on drop.
+        // Short-circuit notation
+		e.preventDefault && e.preventDefault();
+		e.stopPropagation && e.stopPropagation();
+        
+        // Reset pointer events for new interaction
+        el.style.pointerEvents = 'auto';
+        
+        // Update state of dragged panel
+        if(dropzone !== null) {
+            gui[el.id].state = (el.dataset.state = 'docked');
+            dropzone.appendChild(el);
+        }
+        
         // Save information into the 'gui' object
-        gui[id].state = el.dataset.state;
+        gui[el.id].state = el.dataset.state;
     
         // Redefine rectangle to get new position
         rect = el.getBoundingClientRect();
         
         // Update position
-        gui[id].posX = rect.left;
-        gui[id].posY = rect.top;
-	}
+        gui[el.id].posX = rect.left;
+        gui[el.id].posY = rect.top;
+        
+        // Reset state, used for 'collapsed' state on '.dock' when not empty
+        prevState = null;
+        dropzone = null;
+        
+	} // END PRIVATE drop
+    
+    function updateGUI(newState) {
+        dropzone.dataset.state = newState;
+
+        // Trigger IE 8+ to 'redraw' on screen after changing 'data-*'
+        dropzone.className = dropzone.className;
+        
+        gui[dropzone.id].state = newState;
+    }
 };
+
+// TODO:
+// - CHANGE UPDATEGUI FUNCTION TO HANDLE OTHER THINGS THAN ONLY THE DOCK, but also panels
+// - REMOVE VENDOR PREFIX IF NOT NEEDED ANYMORE
+// - APPLY 3D TRANSFORMS, BECAUSE ELEMENT IS NO LONGER PART OF THE PARENT DOCK WHEN LOOSE
+//      --> USE DOCS: http://stackoverflow.com/questions/15194313/webkit-css-transform3d-position-fixed-issue
+// IE 11 ISSUE: PANEL SHOULD GO TO TOP ON MOUSEDOWN EVENT
+// SAFARI: NOTHING WORKS!
+/*
+
+Ctrl-Alt-C Collapse code region at current cursor position
+Ctrl-Alt-X Expand code region at current cursor position
+Alt-1 Collapse all code regions in current editor
+Shift-Alt-1 Expand all code regions in current editor
+
+*/
 // Browserify Requirements
 var $ = require('jquery');
 
@@ -235,20 +269,27 @@ $(function() {
 
 });
 
-(function() {
+
+// Dock control
+$(document).on('click', '.btn-dock', function(e) {
+    if(e.preventDefault) e.preventDefault();
+
+    var el = $(this).parent('.dock');
+
+    el.attr('data-state', 
+        el.attr('data-state') === 'expanded' ? 'collapsed' : 'expanded');
+
+    return false;
+});
+
+// Panel control
+$(document).on('click', '#btn-style-add', function(e) {
+    if(e.preventDefault) e.preventDefault();
     
-    // Dock control
-    $(document).on('click', '.btn-dock', function(e) {
-        if(e.preventDefault) e.preventDefault();
-        
-        var el = $(this).parent('.dock');
-        
-        el.attr('data-state', 
-            el.attr('data-state') === 'expanded' ? 'collapsed' : 'expanded');
-        
-        return false;
-    });
-})();
+    
+    
+    return false;
+});
 var Support = function() {
 	
 	// Touch

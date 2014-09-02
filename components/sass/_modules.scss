@@ -6,31 +6,99 @@
     4. Text
     5. Other
 
+    Syntax:
+    hyphen-delimited
+
 */
 
-.dock {
+#dock-left {
+    left: 0;
+}
+#dock-right {
+    right: 0;
+}
+
+.btn-dock {
     // Box
-    position: relative;
+    width: 44px;
+    height: 44px;
+    float: right;
+   
+    // Background
+    background: purple;
     
     // Other
-    //transform: translateZ(0);
-    padding-top: 44px;
 }
 
 .panel {
     // Box
-    width: 200px;
+    width: $panel-width;
     height: 200px;
     
     // Other
     transform: translateZ(0);
+    clear: both;
+    
+    h2 {
+        // Box
+        height: $btn-res;
+        display: flex;
+        align-items: center;
+        
+        // Text
+        font-family: 'Tw Cen MT Condensed';
+        
+        // Other
+        color: white;
+        transition: all .3s ease;
+        
+        &:hover {
+            color: $main-blue;
+        }
+    }
+    
+    nav {
+        // Box
+        height: $btn-res;
+        
+        // Background
+        background-color: $sub-gray;
+        
+        ul {
+            // Box
+            height: $btn-res;
+            
+            li {
+                // Box
+                display: inline-block;
+                width: $btn-res;
+                height: $btn-res;
+                
+                a {
+                    // Box
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 100%;
+                    height: 100%;
+                    
+                    // Other
+                    color: white;
+                    &:hover {
+                        color: $main-blue;
+                    }
+                }
+            }
+        }
+    }
 }
 
 #panel-style {
     // Box
 
     // Background
-    background: yellow;
+    background: $main-gray;
+    
 }
 
 #panel-element {
@@ -38,25 +106,12 @@
     background: orange;
 }
 
-#library {
-    background: green;
-    width: 200px;
-    height: 200px;
-    z-index: 11;
+// Icon Fonts // EXAMPLE USAGE: <span aria-hidden="true" data-icon="&#xE000;"></span>
+span[data-icon]:before {
+	font-family: 'icon-font-test';
+	content: attr(data-icon);
+	speak: none;
+	font-style: normal;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
-
-.btn-dock {
-    // Box
-    width: 44px;
-    height: 44px;
-    display: block;
-    position: absolute;
-    top: 0;
-    right: 0;
-    
-    // Background
-    background: purple;
-    
-    // Other
-}
-

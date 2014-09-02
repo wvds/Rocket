@@ -1,2 +1,21 @@
+// Colorscheme
+$main-gray:     #35393D;
+$sub-gray:      #40454A;
+$main-blue:     #00ABC8;
+
 // Measurements
 $header-height: 100px;
+$panel-width:   400px;
+$btn-res:       44px;
+
+// Fonts
+@font-face {
+	font-family: 'icon-font-test';
+	src: url('../fonts/icon-font-test.eot');
+    src: url('../fonts/icon-font-test.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/icon-font-test.woff') format('woff'),
+         url('../fonts/icon-font-test.ttf') format('truetype'),
+         url('../fonts/icon-font-test.svg#LatoRegular') format('svg');
+	font-weight: normal;
+	font-style:normal;
+}

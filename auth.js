@@ -21,7 +21,7 @@ passport.use(new LocalStrategy(
 
 // These functions must be defined in order to store the user information in the session.
 passport.serializeUser(function(user, done) {
-	done(null, user._id);
+	done(null, user._id, user.type);
 });
 
 passport.deserializeUser(function(id, done) {

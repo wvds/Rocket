@@ -6,6 +6,9 @@
     4. Text
     5. Other
 
+    Syntax:
+    hyphen-delimited
+
 */
 
 html, body, div, span, object, iframe,
@@ -31,6 +34,24 @@ time, mark, audio, video {
 
 * {
 	box-sizing: border-box;
+}
+
+body {
+    font-size: 62.5%;
+    line-height: 1.6em;
+    overflow: hidden;
+}
+h2 {
+    font-size: 2.2em;
+    text-transform: uppercase;
+    font-weight: 100;
+}
+a {
+    font-size: 1.6em;
+    text-decoration: none;
+}
+p {
+    font-size: 1.6em;
 }
 
 [draggable] {

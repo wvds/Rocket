@@ -8,17 +8,20 @@ module.exports = function(connection) {
 		cookieParser = require('cookie-parser'),
 		routes = require('./routes/route')(),
 		passport = require('./auth'),
-		rocket = express();
+		app = express(),
+        numCPUs = require('os').cpus().length;
+    
+    console.log("CPUs: " + numCPUs);
 
 	// Middleware | SET
-    rocket.set('view engine', 'ejs');
+    app.set('view engine', 'ejs');
 
     // Middleware | USE
-	rocket.use(require('connect-livereload')());
-	rocket.use(express.static(__dirname));
-	rocket.use(cookieParser());
-	rocket.use(bodyParser.urlencoded({ extended: true }));
-	rocket.use(session({
+	app.use(require('connect-livereload')());
+	app.use(express.static(__dirname));
+	app.use(cookieParser());
+	app.use(bodyParser.urlencoded({ extended: true }));
+	app.use(session({
         secret: 'rocketio',
         resave: true,
         saveUninitialized: true,
@@ -26,24 +29,24 @@ module.exports = function(connection) {
 			mongoose_connection: connection
 		})
     }));
-	rocket.use(passport.initialize());
-	rocket.use(passport.session());
+	app.use(passport.initialize());
+	app.use(passport.session());
 
 	// Routes | GET
-	rocket.get('/', function(req, res) {
+	app.get('/', function(req, res) {
 		res.render('index.ejs', {
 			title: 'Rocket',
 			body: '<h1>Welcome to Rocket!</h1>'
 		});
 	});
-	rocket.get('/project', routes.rd_project);
-    rocket.get('/project/:code', routes.rd_editor);
-	rocket.get('/login', routes.rd_login);
-    rocket.get('/user', routes.rd_user);
+	app.get('/project', routes.rd_project);
+    app.get('/project/:code', routes.rd_editor);
+	app.get('/login', routes.rd_login);
+    app.get('/user', routes.rd_user);
 
     // Routes | POST
-	rocket.post('/login', routes.rd_authenticate);
+	app.post('/login', routes.rd_authenticate);
 
     // Return application
-	return rocket;
+	return app;
 };
