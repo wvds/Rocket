@@ -21,7 +21,8 @@ components/sass/bourbon/*
 !README.txt
 
 # Exclude images in builds
-builds/**/images/*
+builds/*
+!builds/**/images/*
 
 # Exclude executables
 *.exe
