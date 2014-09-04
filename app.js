@@ -11,7 +11,7 @@ module.exports = function(connection) {
 		app = express(),
         numCPUs = require('os').cpus().length;
     
-    console.log("CPUs: " + numCPUs);
+    console.log("CPUs used: " + numCPUs);
 
 	// Middleware | SET
     app.set('view engine', 'ejs');

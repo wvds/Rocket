@@ -20,9 +20,8 @@ components/sass/bourbon/*
 # Except read me
 !README.txt
 
-# Exclude builds, except dev images
-builds/**/*
-!builds/development/images/
+# Exclude production
+builds/production/*
 
 # Exclude executables
 *.exe

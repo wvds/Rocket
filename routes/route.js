@@ -1,5 +1,7 @@
 /* Javascript Abbreviation Rules
 
+    Written by: Nicky Lenaers
+    
     req     Request
     res     Result
     rd      Read

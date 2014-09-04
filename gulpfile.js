@@ -16,6 +16,7 @@ var	server = require('./server'),
 // Sources
 var source_js = ['components/scripts/*.js'],
 	source_sass = ['components/sass/main.scss'],
+    source_node = ['routes/**/*.js'],
 	source_html = ['views/*.ejs'];
 
 // Environment
@@ -23,7 +24,7 @@ var env = process.env.NODE_ENV || 'development';
 
 if(env === 'development') {
  	output_dir = 'builds/development/';
- 	sass_style = 'expanded';
+ 	sass_style = 'expanded';    
 } else {
  	output_dir = 'builds/production/';
  	sass_style = 'compressed';
