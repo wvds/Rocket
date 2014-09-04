@@ -290,6 +290,21 @@ $(document).on('click', '#btn-style-add', function(e) {
     
     return false;
 });
+
+// Export button
+$(document).on('click', '#btn-export', function(e) {
+	var url = window.location.pathname;
+	url = url.split("/").pop();
+	
+	var wnd = window.open("/export/" + url);
+    if (wnd) {
+    	wnd.onload = function() {
+			wnd.close();
+    	};
+	}
+	return false;
+});
+
 var Support = function() {
 	
 	// Touch

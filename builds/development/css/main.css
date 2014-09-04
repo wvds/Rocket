@@ -491,7 +491,7 @@ body {
 
 header {
   width: 100%;
-  background: #35393d;
+  background: #35393D;
   height: 100px;
 }
 
@@ -509,7 +509,7 @@ main > section {
   width: 400px;
   height: -webkit-calc(100vh - 100px);
   height: calc(100vh - 100px);
-  background: #35393d;
+  background: #35393D;
   -webkit-transition: all .3s ease;
           transition: all .3s ease;
   clear: both;
@@ -565,11 +565,11 @@ main > section {
           transition: all .3s ease;
 }
 .panel h2:hover {
-  color: #00abc8;
+  color: #00ABC8;
 }
 .panel nav {
   height: 44px;
-  background-color: #40454a;
+  background-color: #40454A;
 }
 .panel nav ul {
   height: 44px;
@@ -597,11 +597,11 @@ main > section {
   color: white;
 }
 .panel nav ul li a:hover {
-  color: #00abc8;
+  color: #00ABC8;
 }
 
 #panel-style {
-  background: #35393d;
+  background: #35393D;
 }
 
 #panel-element {

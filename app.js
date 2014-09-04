@@ -43,6 +43,7 @@ module.exports = function(connection) {
     app.get('/project/:code', routes.rd_editor);
 	app.get('/login', routes.rd_login);
     app.get('/user', routes.rd_user);
+	app.get('/export/:code', routes.rd_export);
 
     // Routes | POST
 	app.post('/login', routes.rd_authenticate);

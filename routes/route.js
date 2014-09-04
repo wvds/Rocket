@@ -15,7 +15,10 @@ module.exports = function() {
         query = require('../queries/query')(),
         async = require('async'),
         scm_project = require('../schemas/project'),
-        route = {};
+		fs = require('fs'),
+        archiver = require('archiver'),
+		path = require('path'),
+		route = {};
     
     route.res_err = function(res) {
         return res.status(500).json({status: 'Connection Error'});
@@ -128,6 +131,52 @@ module.exports = function() {
             res.render('editor_dev');
         }
     }
+
+	// Export
+	route.rd_export = function(req, res) {
+
+        // Verify user
+        if(req.user === undefined) { return res.redirect('/login'); }
+
+        // Define out here, so all following tasks can access editor data
+        var project_code = req.param('code'),
+            usertype = req.user.type,
+			outputdir = __dirname + '/../components/output/'
+
+		// Create folder with all files
+		fs.mkdir(outputdir + project_code, 0777, function(err){
+			fs.writeFile(outputdir + project_code + '/index.html', 'Hier komt de html!', function(err) {
+				if(err) {
+					console.log(err);
+					res.send('Error while saving:' + err);
+				} else {
+
+					// Zip folder and send to user for download
+					var zippath = path.resolve(__dirname + '/', '../components/output/');
+					console.log(zippath);
+					var output = fs.createWriteStream(zippath + "/" + project_code + '.zip');
+					var archive = archiver('zip');
+
+					output.on('close', function() {
+						console.log(archive.pointer() + ' total bytes');
+						console.log('archiver closed');
+						res.download(zippath + "/" + project_code + '.zip');
+					});
+
+					archive.on('error', function(err) {
+						throw err;
+					});
+
+					archive.pipe(output);
+					archive.bulk([
+						{ expand: true, cwd: outputdir + project_code, src: ['*'] }
+					]);
+
+					archive.finalize();
+				}
+        	});
+		});
+	} 
 	
     route.rd_authenticate = passport.authenticate('local', {
         failureRedirect: '/login',
